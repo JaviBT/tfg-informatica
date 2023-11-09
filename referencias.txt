@@ -33,4 +33,40 @@ https://www.mdpi.com/2072-4292/15/7/1750
 https://www.mdpi.com/2071-1050/15/8/6438
 https://www.mdpi.com/1424-8220/22/2/456
 
+YOLOv5s for pavement damage: https://www.sciencedirect.com/science/article/pii/S1569843223001577
 
+
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
+
+Visualizing Street Pavement Anomalies through Fog
+Computing V2I Networks and Machine Learning:
+
+Utilizan sensores tipo giróscopo y acelerómetro para detectar baches. No estan usando computer vision.
+
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
+
+Pavement Distress Identification Based on Computer Vision
+and Controller Area Network (CAN) Sensor Models:
+
+The computer vision model was developed using the You Only
+Look Once (YOLOv5) algorithm for detecting and classifying pavement distresses into nine classes.
+The sensor-based model combined eight Controller Area Network (CAN) bus sensors available
+in most new vehicles to predict pavement distress. This research employed an extreme gradient
+boosting model (XGBoost) to train the sensor-based model.
+
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
+
+Crowdsensing-based Road Damage Detection
+Challenge (CRDDC’2022):
+
+All participants have used YOLO models or ensembles of YOLO models and RCNN models.
+
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
