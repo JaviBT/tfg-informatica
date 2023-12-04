@@ -24,14 +24,24 @@ Link de descarga: https://figshare.com/articles/dataset/RDD2022_-_The_multi-nati
 El ZIP con todo esta roto pero se pueden descargar separado por paises. El ZIP de Norway no funciona correctamente pero los otros si.
 Link de descarga RDD2020: https://data.mendeley.com/datasets/5ty2wb6gvg/1
 
+RD2020 Repos:
+    https://github.com/USC-InfoLab/rddc2020
+    https://github.com/karmarv/rdd2020
+
 
 Papers interesantes:
 RDD2022 Winners solution: https://www.researchgate.net/publication/367456896_Crowdsensing-based_Road_Damage_Detection_Challenge_CRDDC'2022
+https://www.researchgate.net/publication/363668453_RDD2022_A_multi-national_image_dataset_for_automatic_Road_Damage_Detection
+
+https://www.researchgate.net/publication/367456896_Crowdsensing-based_Road_Damage_Detection_Challenge_CRDDC'2022
 
 Papers:
 https://www.mdpi.com/2072-4292/15/7/1750
 https://www.mdpi.com/2071-1050/15/8/6438
 https://www.mdpi.com/1424-8220/22/2/456
+
+Lista de papers sobre deteccion de baches:
+https://www.catalyzex.com/s/Road%20Damage%20Detection
 
 YOLOv5s for pavement damage: https://www.sciencedirect.com/science/article/pii/S1569843223001577
 
