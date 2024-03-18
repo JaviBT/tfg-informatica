@@ -1,0 +1,9 @@
+path: ../tfg-informatica/datasets/RDD2022/images
+train: China_Drone/train/images
+val: China_Drone/train/images
+
+names:
+  0: D00
+  1: D10
+  2: D20
+  3: D40

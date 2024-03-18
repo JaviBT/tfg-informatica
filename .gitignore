@@ -4,3 +4,10 @@
 env/
 USC-InfoLab-RDDC2020/
 IEEE-Big-Data-2020-master/
+build/
+
+datasets/*
+data/RDD2022/*
+data/RDD2020/*
+runs/*
+*.pt
