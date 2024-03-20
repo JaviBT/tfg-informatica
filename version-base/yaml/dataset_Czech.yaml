@@ -1,11 +1,10 @@
 path: ../tfg-informatica/datasets/RDD2022/images
 train: Czech/train/images
 val: Czech/train/images
-test: Czech/test/images
 
 nc: 4
 names:
-  0: D00
-  1: D10
-  2: D20
-  3: D40
+  0: D00 - Longitudinal Crack
+  1: D10 - Transverse Crack
+  2: D20 - Alligator Crack
+  3: D40 - Potholes

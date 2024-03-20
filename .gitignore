@@ -11,3 +11,5 @@ data/RDD2022/*
 data/RDD2020/*
 runs/*
 *.pt
+
+memoria/*

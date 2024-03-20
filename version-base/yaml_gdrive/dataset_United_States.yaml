@@ -1,4 +1,4 @@
-path: ../tfg-informatica/datasets/RDD2022/images
+path: gdrive/MyDrive/tfg-informatica/datasets/RDD2022/images
 train: United_States/train/images
 val: United_States/train/images
 

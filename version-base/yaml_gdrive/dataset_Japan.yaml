@@ -1,6 +1,6 @@
-path: ../tfg-informatica/datasets/RDD2022/images
-train: India/train/images
-val: India/train/images
+path: gdrive/MyDrive/tfg-informatica/datasets/RDD2022/images
+train: Japan/train/images
+val: Japan/train/images
 
 nc: 4
 names:
