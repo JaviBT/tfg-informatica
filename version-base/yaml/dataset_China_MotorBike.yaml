@@ -3,6 +3,7 @@ train: China_MotorBike/train/images
 val: China_MotorBike/train/images
 test: China_MotorBike/test/images
 
+nc: 4
 names:
   0: D00
   1: D10

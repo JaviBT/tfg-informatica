@@ -3,6 +3,7 @@ train: Czech/train/images
 val: Czech/train/images
 test: Czech/test/images
 
+nc: 4
 names:
   0: D00
   1: D10

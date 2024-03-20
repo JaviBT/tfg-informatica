@@ -3,6 +3,7 @@ train: India/train/images
 val: India/train/images
 test: India/test/images
 
+nc: 4
 names:
   0: D00
   1: D10

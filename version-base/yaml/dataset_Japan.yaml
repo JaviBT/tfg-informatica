@@ -3,6 +3,7 @@ train: Japan/train/images
 val: Japan/train/images
 test: Japan/test/images
 
+nc: 4
 names:
   0: D00
   1: D10

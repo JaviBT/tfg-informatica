@@ -3,6 +3,7 @@ train: United_States/train/images
 val: United_States/train/images
 test: United_States/test/images
 
+nc: 4
 names:
   0: D00
   1: D10
