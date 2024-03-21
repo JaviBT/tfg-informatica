@@ -12,4 +12,4 @@ data/RDD2020/*
 runs/*
 *.pt
 
-memoria/*
+memoria/build/*
