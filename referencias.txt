@@ -23,6 +23,7 @@ Paper que explica datos: https://crddc2022.sekilab.global/data/
 Link de descarga: https://figshare.com/articles/dataset/RDD2022_-_The_multi-national_Road_Damage_Dataset_released_through_CRDDC_2022/21431547
 El ZIP con todo esta roto pero se pueden descargar separado por paises. El ZIP de Norway no funciona correctamente pero los otros si.
 Link de descarga RDD2020: https://data.mendeley.com/datasets/5ty2wb6gvg/1
+Link de descarga de RDD2022: https://datasetninja.com/road-damage-detector#download
 
 RD2020 Repos:
     https://github.com/USC-InfoLab/rddc2020

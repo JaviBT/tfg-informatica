@@ -9,6 +9,7 @@ build/
 datasets/*
 data/RDD2022/*
 data/RDD2020/*
+data/rdd2022-DatasetNinja/*
 runs/*
 *.pt
 
