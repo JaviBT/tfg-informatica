@@ -1376,31 +1376,31 @@
 % Figure float structure
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\renewenvironment{figure}[3][]
-{
-	\def\my@auxcaptiontext{#3}
-	\ifx&#1& \def\my@auxcaptiontextshort{} \else \def\my@auxcaptiontextshort{#1} \fi
-	\ifx&#2& \def\my@auxcaptionlabel{} \else \def\my@auxcaptionlabel{#2} \fi
-	\@float{figure}[htbp]
-		\begin{center}
-}
-{
-		\end{center}
-		\caption[\my@auxcaptiontextshort]{\label{\my@auxcaptionlabel}\my@auxcaptiontext}
-	\end@float
-}
-
-\renewenvironment{figure*}[3][]
-{
-	\@dbfloat{figure}[htbp]
-		\caption[#1]{#3}
-		\label{#2}
-		\begin{center}
-}
-{
-		\end{center}
-	\end@dbfloat
-}
+%\renewenvironment{figure}[3][]
+%{
+%	\def\my@auxcaptiontext{#3}
+%	\ifx&#1& \def\my@auxcaptiontextshort{} \else \def\my@auxcaptiontextshort{#1} \fi
+%	\ifx&#2& \def\my@auxcaptionlabel{} \else \def\my@auxcaptionlabel{#2} \fi
+%	\@float{figure}[htbp]
+%		\begin{center}
+%}
+%{
+%		\end{center}
+%		\caption[\my@auxcaptiontextshort]{\label{\my@auxcaptionlabel}\my@auxcaptiontext}
+%	\end@float
+%}
+%
+%\renewenvironment{figure*}[3][]
+%{
+%	\@dbfloat{figure}[htbp]
+%		\caption[#1]{#3}
+%		\label{#2}
+%		\begin{center}
+%}
+%{
+%		\end{center}
+%	\end@dbfloat
+%}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % image and imagec macros
@@ -1539,55 +1539,55 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Table float structure
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\let\oldsubtable\subtable
-
-\renewcommand{\subtable}[3]
-{
-	\ifx&#2& \oldsubtable[lof][]
-	{
-		\ifx&#1& \else \label{#1} \fi
-		#3
-	}
-	\else \oldsubtable[lof][#2]
-	{
-		\ifx&#1& \else \label{#1} \fi
-		#3
-	}
-	\fi
-}
-
-\renewenvironment{table}[3][]
-{
-	\belowcaptionskip=-0.8\myem
-	\abovecaptionskip=0.5\myem
-
-	\@float{table}[htbp]
-		\ifx&#1& \def\my@auxcaptiontextshort{} \else \def\my@auxcaptiontextshort{#1} \fi
-		\ifx&#2& \def\my@auxcaptionlabel{} \else \def\my@auxcaptionlabel{#2} \fi
-		\def\my@auxcaptiontext{#3}
-		\begin{center}
-}
-{
-		\end{center}
-		\ifx\my@auxcaptionlabel\empty
-			\ifx\my@auxcaptiontextshort\empty
-				\caption{\my@auxcaptiontext}
-			\else
-				\caption[\my@auxcaptiontextshort]{\my@auxcaptiontext}
-			\fi
-		\else
-			\ifx\my@auxcaptiontextshort\empty
-				\caption{\label{\my@auxcaptionlabel}\my@auxcaptiontext}
-			\else
-				\caption[\my@auxcaptiontextshort]{\label{\my@auxcaptionlabel}\my@auxcaptiontext}
-			\fi
-		\fi
-	\end@float
-}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Table float structure
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%\let\oldsubtable\subtable
+%
+%\renewcommand{\subtable}[3]
+%{
+%	\ifx&#2& \oldsubtable[lof][]
+%	{
+%		\ifx&#1& \else \label{#1} \fi
+%		#3
+%	}
+%	\else \oldsubtable[lof][#2]
+%	{
+%		\ifx&#1& \else \label{#1} \fi
+%		#3
+%	}
+%	\fi
+%}
+%
+%\renewenvironment{table}[3][]
+%{
+%	\belowcaptionskip=-0.8\myem
+%	\abovecaptionskip=0.5\myem
+%
+%	\@float{table}[htbp]
+%		\ifx&#1& \def\my@auxcaptiontextshort{} \else \def\my@auxcaptiontextshort{#1} \fi
+%		\ifx&#2& \def\my@auxcaptionlabel{} \else \def\my@auxcaptionlabel{#2} \fi
+%		\def\my@auxcaptiontext{#3}
+%		\begin{center}
+%}
+%{
+%		\end{center}
+%		\ifx\my@auxcaptionlabel\empty
+%			\ifx\my@auxcaptiontextshort\empty
+%				\caption{\my@auxcaptiontext}
+%			\else
+%				\caption[\my@auxcaptiontextshort]{\my@auxcaptiontext}
+%			\fi
+%		\else
+%			\ifx\my@auxcaptiontextshort\empty
+%				\caption{\label{\my@auxcaptionlabel}\my@auxcaptiontext}
+%			\else
+%				\caption[\my@auxcaptiontextshort]{\label{\my@auxcaptionlabel}\my@auxcaptiontext}
+%			\fi
+%		\fi
+%	\end@float
+%}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
