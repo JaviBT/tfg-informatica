@@ -1,14 +1,14 @@
 path: gdrive/MyDrive/tfg-informatica/datasets/RDD2022/images
 train:
-	- Norway/fold_0/images
-	- Norway/fold_1/images
-	- Norway/fold_3/images
+- Norway/fold_0/images
+- Norway/fold_1/images
+- Norway/fold_3/images
 val:
-	- Norway/fold_2/images
+- Norway/fold_2/images
 
 nc: 4
 names:
-	0: D00 - Longitudinal Crack
-	1: D10 - Transverse Crack
-	2: D20 - Alligator Crack
-	3: D40 - Pothole
+  0: D00 - Longitudinal Crack
+  1: D10 - Transverse Crack
+  2: D20 - Alligator Crack
+  3: D40 - Pothole

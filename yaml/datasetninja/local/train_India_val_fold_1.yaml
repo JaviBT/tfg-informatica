@@ -1,14 +1,14 @@
 path: ../data/rdd2022-DatasetNinja/images
 train:
-	- India/fold_0/images
-	- India/fold_2/images
-	- India/fold_3/images
+- India/fold_0/images
+- India/fold_2/images
+- India/fold_3/images
 val:
-	- India/fold_1/images
+- India/fold_1/images
 
 nc: 4
 names:
-	0: D00 - Longitudinal Crack
-	1: D10 - Transverse Crack
-	2: D20 - Alligator Crack
-	3: D40 - Pothole
+  0: D00 - Longitudinal Crack
+  1: D10 - Transverse Crack
+  2: D20 - Alligator Crack
+  3: D40 - Pothole

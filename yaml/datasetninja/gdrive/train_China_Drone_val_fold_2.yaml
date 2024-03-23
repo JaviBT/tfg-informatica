@@ -1,14 +1,14 @@
 path: gdrive/MyDrive/tfg-informatica/datasets/RDD2022/images
 train:
-	- China_Drone/fold_0/images
-	- China_Drone/fold_1/images
-	- China_Drone/fold_3/images
+- China_Drone/fold_0/images
+- China_Drone/fold_1/images
+- China_Drone/fold_3/images
 val:
-	- China_Drone/fold_2/images
+- China_Drone/fold_2/images
 
 nc: 4
 names:
-	0: D00 - Longitudinal Crack
-	1: D10 - Transverse Crack
-	2: D20 - Alligator Crack
-	3: D40 - Pothole
+  0: D00 - Longitudinal Crack
+  1: D10 - Transverse Crack
+  2: D20 - Alligator Crack
+  3: D40 - Pothole

@@ -1,0 +1,23 @@
+Los datos utilizados provienen de la competición Crowdsensing-based Road Damage Detection Challenge (CRDDC2022). Se trata de un conjunto de datos con imágenes de carreteras y aceras, etiquetadas con la presencia de daños en el pavimento. Los datos provienen de seis países: China, República Checa, India, Japón, Noruega y Estados Unidos. Cada uno de estos países tiene un conjunto de datos que consiste en imágenes de carreteras tomadas desde un vehículo en movimiento. Además, China también proporciona un conjunto de datos con imágenes tomadas desde un dron, sumando un total de siete conjuntos de datos. Estos conjuntos de datos se dividen a su vez en entrenamiento y test, donde el conjunto de entrenamiento se compone de imágenes con sus respectivas etiquetas de daños en el pavimento, y el conjunto de test se compone de imágenes sin etiquetar. Las etiquetas de daños en el pavimento se proporcionan en forma de coordenadas de caja delimitadora (bounding box) y una etiqueta que representa el tipo de daño asociado a la caja.
+
+\subsection{¿Cómo descargar los datos?}
+En el repositorio de la competición \cite{RoadDamageDetector_repo} se proporciona un README con una sección sobre los datos de la CRDDC2022. En esta sección del README se pueden descargar zips con los datos completos y por país. Además, se proporciona un enlace a figshare \cite{RDD2022_dataset} donde se pueden descargar los datos completos. Personalmente, tuve problemas descargando los datos desde estas fuentes, ya que los datos correspondientes a Noruega me llegaban corruptos. Es por esto que opte por descargar los datos desde DatasetNinja \cite{RDD2022_datasetNinja}, donde se puede descargar los datos completos sin problemas.
+
+\subsection{¿Cómo se estructuran los datos?}
+Los datos de la CRDDC2022 se estructuran en siete carpetas, una por cada uno de los subconjuntos antes mencionados. Cada carpeta contiene dos carpetas, una de train y otra de test. Las carpetas de train tienen otras dos subcarpetas una para las imágenes y otra para los archivos de anotaciones, mientras que las carpetas de test solo tienen una carpeta de imagenes. Las imágenes y sus correspondientes anotaciones se nombran de la misma forma, de manera que se pueda asociar una imagen con su anotación. El formato de estos nombres es \texttt{<región>\_<identificador>.<extension>}, donde \texttt{<región>} es el subconjunto al que pertenece la imagen, \texttt{<identificador>} es un número que identifica a la imagen, y \texttt{<extension>} es la extensión del archivo. Las imágenes son todas en formato \texttt{jpg}, y las anotaciones son en formato \texttt{xml} si se descarga el conjunto por el repositorio de la competición o figshare, y en formato \texttt{json} si se descarga el conjunto por DatasetNinja. En la descarga por DatasetNinja, los datos no estan dividos por subconjunto sino que se encuantran todos juntas en las carpetas generales de train y test.
+
+\subsection{¿Qué información contienen las anotaciones?}
+Las anotaciones como hemos dicho pueden venir en formato \texttt{xml} o \texttt{json} dependiendo de la fuente de descarga. No obstante, la información que contienen es la misma. Cada anotación contiene la información de su imagen correspondiente, y esta información se estructura de la siguiente forma:
+\begin{itemize}
+    \item \texttt{filename}: Nombre de la imagen.
+    \item \texttt{size}: Tamaño de la imagen en píxeles.
+    \item \texttt{objects}: Lista de objetos en la imagen. Cada objeto contiene:
+    \begin{itemize}
+        \item \texttt{name}: Nombre de la clase del objeto.
+        \item \texttt{bndbox}: Coordenadas de la caja delimitadora del objeto.
+    \end{itemize}
+\end{itemize}
+Es importante mencionar que las coordenadas de la caja delimitadora se proporcionan en formato \texttt{xmin, ymin, xmax, ymax}, donde \texttt{xmin} y \texttt{ymin} son las coordenadas del punto superior izquierdo de la caja, y \texttt{xmax} y \texttt{ymax} son las coordenadas del punto inferior derecho de la caja. Además, las coordenadas se proporcionan en píxeles. Después tendremos que normalizar estas coordenadas y adaptarlas al formato requerido por nuestros modelos para poder trabajar con ellas.
+
+Las posibles clases de los objetos son las siguientes:
+    
