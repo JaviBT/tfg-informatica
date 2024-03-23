@@ -1,16 +1,21 @@
-/RDD2022
-/RDD2020
+# General
 .DS_Store
 env/
 USC-InfoLab-RDDC2020/
 IEEE-Big-Data-2020-master/
 build/
 
+# Data
 datasets/*
+data/raw/*
 data/RDD2022/*
 data/RDD2020/*
 data/rdd2022-DatasetNinja/*
+data/datasets.zip
+
+# Results
 runs/*
 *.pt
 
+# Memoria del TFG
 memoria/build/*
