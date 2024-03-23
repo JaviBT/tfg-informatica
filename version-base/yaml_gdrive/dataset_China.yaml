@@ -1,0 +1,14 @@
+path: gdrive/MyDrive/tfg-informatica/datasets/RDD2022/images
+train: 
+- China_Drone/train/images
+- China_MotorBike/train/images
+val: 
+- China_Drone/train/images
+- China_MotorBike/train/images
+
+nc: 4
+names:
+  0: D00 - Longitudinal Crack
+  1: D10 - Transverse Crack
+  2: D20 - Alligator Crack
+  3: D40 - Potholes
