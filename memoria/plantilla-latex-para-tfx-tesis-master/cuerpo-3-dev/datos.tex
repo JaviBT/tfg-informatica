@@ -2,11 +2,14 @@ Los datos utilizados provienen de la competición Crowdsensing-based Road Damage
 
 Los organizadores de la competición han publicado un paper \cite{RDD2022_data_paper} donde se detallan los datos y se proporciona una descripción de los mismos. En esta sección se va a hacer un resumen de los datos y se va a explicar cómo se estructuran, qué información contienen y cómo son las imágenes.
 
+
 \subsection{¿Cómo descargar los datos?}
 En el repositorio de la competición \cite{RoadDamageDetector_repo} se proporciona un README con una sección sobre los datos de la CRDDC2022. En esta sección del README se pueden descargar zips con los datos completos y por país. Además, se proporciona un enlace a figshare \cite{RDD2022_dataset} donde se pueden descargar los datos completos. Personalmente, tuve problemas descargando los datos desde estas fuentes, ya que los datos correspondientes a Noruega me llegaban corruptos. Es por esto que opte por descargar los datos desde DatasetNinja \cite{RDD2022_datasetNinja}, donde se puede descargar los datos completos sin problemas.
 
+
 \subsection{¿Cómo se estructuran los datos?}
 Los datos de la CRDDC2022 se estructuran en siete carpetas, una por cada uno de los subconjuntos antes mencionados. Cada carpeta contiene dos carpetas, una de train y otra de test. Las carpetas de train tienen otras dos subcarpetas una para las imágenes y otra para los archivos de anotaciones, mientras que las carpetas de test solo tienen una carpeta de imagenes. Las imágenes y sus correspondientes anotaciones se nombran de la misma forma, de manera que se pueda asociar una imagen con su anotación. El formato de estos nombres es \texttt{<región>\_<identificador>.<extension>}, donde \texttt{<región>} es el subconjunto al que pertenece la imagen, \texttt{<identificador>} es un número que identifica a la imagen, y \texttt{<extension>} es la extensión del archivo. Las imágenes son todas en formato \texttt{jpg}, y las anotaciones son en formato \texttt{xml} si se descarga el conjunto por el repositorio de la competición o figshare, y en formato \texttt{json} si se descarga el conjunto por DatasetNinja. En la descarga por DatasetNinja, los datos no estan dividos por subconjunto sino que se encuantran todos juntas en las carpetas generales de train y test.
+
 
 \subsection{¿Qué información contienen las anotaciones?}
 Las anotaciones como hemos dicho pueden venir en formato \texttt{xml} o \texttt{json} dependiendo de la fuente de descarga. No obstante, la información que contienen es la misma. Cada anotación contiene la información de su imagen correspondiente, y esta información se estructura de la siguiente forma:
@@ -40,6 +43,7 @@ El conjunto de datos de descargado de DatasetNinja tiene la ventaja de que ya ag
     \label{fig:datasetNinja_class_count_bar}
 \end{figure}
 
+
 \subsection{¿Cómo son las imágenes?}
 Las imágenes han sido capturadas con sistemas muy diferentes dependiendo del subconjunto al que pertenecen. Esto junto con la diversidad de los entornos en los que se han tomado las imágenes, hace que las imágenes tengan una gran variabilidad en cuanto a calidad, resolución, iluminación, etc. En la tabla \ref{tab:dataset_info} se puede ver un resumen de la información sobre las imágenes de los datos de la CRDDC2022.
 
@@ -50,13 +54,13 @@ Las imágenes han sido capturadas con sistemas muy diferentes dependiendo del su
         \hline
         \textbf{Región} & \textbf{Vehículo} & \textbf{Dispositivo} & \textbf{Resolución} & \textbf{Nº Imágenes} & \textbf{Nº Anotaciones} \\
         \hline
-        China & Motocicleta & Smartphone & 512x512 & 1,000 & 1,000 \\
-        China & Dron (DJI M600 Pro) & Drone Camera & 512x512 & 1,000 & 1,000 \\
-        República Checa & Vehículo & Dashcam & 600x600 & 3538 & 1,000 \\
-        India & Vehículo & Dashcam & 720x720 & 9665 & 1,000 \\
+        China & Motocicleta & Smartphone & 512x512 & 2477 & 4650 \\
+        China & Dron (DJI M600 Pro) & Drone Camera & 512x512 & 2401 & 3068 \\
+        República Checa & Vehículo & Dashcam & 600x600 & 3538 & 1745 \\
+        India & Vehículo & Dashcam & 720x720 & 9665 & 6831 \\
         Japón & Vehículo & Dashcam & 600x600 & 13133 & 16470 \\
-        Noruega & Vehículo & High-resolution Cameras & 4040x2035 & 10201 & 1,000 \\
-        Estados Unidos & Vehículo & Google Street View & 640x640 & 6005 & 1,000 \\
+        Noruega & Vehículo & High-resolution Cameras & 4040x2035 & 10201 & 11229 \\
+        Estados Unidos & Vehículo & Google Street View & 640x640 & 6005 & 11014 \\
         \hline
     \end{tabular}
     \caption{Información sobre las imágenes de los datos de la CRDDC2022.}
@@ -66,3 +70,8 @@ Las imágenes han sido capturadas con sistemas muy diferentes dependiendo del su
 En la tabla se puede ver que las imágenes de Noruega van a tener que ser redimensionadas para poder trabajar con ellas, ya que tienen una resolución mucho mayor que el resto de imágenes y que no es necesaria para el entrenamiento de nuestros modelos. También se puede ver que hay una gran variabilidad en los métodos de captura de imagen. Tendremos que tener en cuenta esta variabilidad a la hora de entrenar nuestros modelos, ya que si estos no son capaces de generalizar bien, podrían tener problemas a la hora de detectar daños en el pavimento en imágenes que no se parezcan a las del conjunto de entrenamiento, más adelante veremos cómo abordar este problema.
 
 A continuación, se muestran algunas imágenes de los datos de la CRDDC2022 con sus correspondientes anotaciones. Nótese la diferencia entre grietas longitudinales, transversales y de cocodrilo, y los baches. ...
+
+
+\subsection{Preparación de los datos}
+En la sección de modelos [Sección \ref{SEC:MODELOS}] se ha explicado cómo se ha usado YOLO de Ultralytics para la detección del estado del pavimento. La elección de dicha librería nos obliga a realizar una serie de transformaciones en los datos para poder entrenar nuestros modelos. En esta sección se va a explicar cómo se han preparado los datos de la CRDDC2022 para poder ser usados con YOLO de Ultralytics. Estos cambios se pueden encontrar detallados en los notebooks 'prepare-DatasetNinja.ipynb' y 'dataToYoloFormat.ipynb' en el repositorio del TFG \cite{TFG_Repository}.
+
