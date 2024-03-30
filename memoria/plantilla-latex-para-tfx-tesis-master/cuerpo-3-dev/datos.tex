@@ -70,8 +70,3 @@ Las imágenes han sido capturadas con sistemas muy diferentes dependiendo del su
 En la tabla se puede ver que las imágenes de Noruega van a tener que ser redimensionadas para poder trabajar con ellas, ya que tienen una resolución mucho mayor que el resto de imágenes y que no es necesaria para el entrenamiento de nuestros modelos. También se puede ver que hay una gran variabilidad en los métodos de captura de imagen. Tendremos que tener en cuenta esta variabilidad a la hora de entrenar nuestros modelos, ya que si estos no son capaces de generalizar bien, podrían tener problemas a la hora de detectar daños en el pavimento en imágenes que no se parezcan a las del conjunto de entrenamiento, más adelante veremos cómo abordar este problema.
 
 A continuación, se muestran algunas imágenes de los datos de la CRDDC2022 con sus correspondientes anotaciones. Nótese la diferencia entre grietas longitudinales, transversales y de cocodrilo, y los baches. ...
-
-
-\subsection{Preparación de los datos}
-En la sección de modelos [Sección \ref{SEC:MODELOS}] se ha explicado cómo se ha usado YOLO de Ultralytics para la detección del estado del pavimento. La elección de dicha librería nos obliga a realizar una serie de transformaciones en los datos para poder entrenar nuestros modelos. En esta sección se va a explicar cómo se han preparado los datos de la CRDDC2022 para poder ser usados con YOLO de Ultralytics. Estos cambios se pueden encontrar detallados en los notebooks 'prepare-DatasetNinja.ipynb' y 'dataToYoloFormat.ipynb' en el repositorio del TFG \cite{TFG_Repository}.
-

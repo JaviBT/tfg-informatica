@@ -1,3 +1,14 @@
+% Autor: Francisco Javier Barranco Tena
+% Experimentos realizados en el desarrollo del TFG
+% Alt + z o Option + z para activar el word wrap en Visual Studio Code
+
 Este capítulo se centra en los experimentos realizados durante el desarrollo de este TFG. Para cada experimento se detallarán los pasos seguidos, los resultados obtenidos y las conclusiones extraídas. El TFG se ha realizado de forma iterativa, por lo que se han realizado varios experimentos para probar diferentes datos, configuraciones y modelos. Finalmente, se han incorporado todas las conclusiones extraídas de los experimentos en un modelo final que se ha evaluado en la plataforma de la CRDDC 2022 y que se presenta en el capítulo de resultados.
 
+
 \section{Experimento 1: Entrenamiento con datos de Estados Unidos y validación cruzada}
+
+El primer experimento relevante que se ha realizado en este TFG ha sido el entrenamiento de un modelo YOLOv8 con los datos de Estados Unidos de la CRDDC2022 y la validación cruzada de 4 \textit{folds}. En total se han realizado 4 iteraciones, una por cada \textit{fold}, y se han obtenido métricas de evaluación para cada iteración. El entrenamiento se ha llevado a cabo en Google Colab con una GPU Tesla T4 y ha durado aproximadamente 1 hora y 40 minutos por iteración. A continuación se detallan los pasos seguidos, los resultados obtenidos y las conclusiones extraídas.
+
+Se ha optado por entrenar solo con los datos de Estados Unidos porque como se puede ver en la tabla \ref{tab:dataset_info}, es una región con una cantidad moderada de imágenes pero con una gran cantidad de anotaciones. Por lo tanto, se considera que es una región adecuada para entrenar un primer modelo y probar la metodología de validación cruzada propuesta. El objetivo de este experimento es comprobar si la metodología de validación cruzada propuesta es adecuada para evaluar los modelos, ver cuanto podemos aproximarnos a los resultados de la CRDDC2022 y extraer conclusiones que puedan ayudar a mejorar los modelos en futuros experimentos.
+
+Se ha utilizado un modelo YOLOv8 de tamaño small y pre entrenado con el conjunto de datos, COCO ('yolov8s.pt'). Además, se ha utilizado un tamaño de batch de 50 durante 60 épocas para cada iteración. Estos hiperparámetros se han elegido para ajustarse a las limitaciones de memoria de la GPU Tesla T4 de Google Colab y para que el entrenamiento no dure demasiado tiempo.

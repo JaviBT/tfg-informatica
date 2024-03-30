@@ -1,5 +1,6 @@
 # General
 .DS_Store
+.vscode/
 env/
 USC-InfoLab-RDDC2020/
 IEEE-Big-Data-2020-master/
