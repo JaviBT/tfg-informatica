@@ -12,3 +12,20 @@ El primer experimento relevante que se ha realizado en este TFG ha sido el entre
 Se ha optado por entrenar solo con los datos de Estados Unidos porque como se puede ver en la tabla \ref{tab:dataset_info}, es una región con una cantidad moderada de imágenes pero con una gran cantidad de anotaciones. Por lo tanto, se considera que es una región adecuada para entrenar un primer modelo y probar la metodología de validación cruzada propuesta. El objetivo de este experimento es comprobar si la metodología de validación cruzada propuesta es adecuada para evaluar los modelos, ver cuanto podemos aproximarnos a los resultados de la CRDDC2022 y extraer conclusiones que puedan ayudar a mejorar los modelos en futuros experimentos.
 
 Se ha utilizado un modelo YOLOv8 de tamaño small y pre entrenado con el conjunto de datos, COCO ('yolov8s.pt'). Además, se ha utilizado un tamaño de batch de 50 durante 60 épocas para cada iteración. Estos hiperparámetros se han elegido para ajustarse a las limitaciones de memoria de la GPU Tesla T4 de Google Colab y para que el entrenamiento no dure demasiado tiempo.
+
+Una vez entrenado el modelo, hemos descargado los pesos y se ha realizado la validación de cada modelo con su correspondiente conjunto de validación. Para ello, se ha utilizado el notebook 'validate\_YOLO\_model.ipynb' que se puede encontrar en el repositorio del TFG \cite{TFG_Repository}. Los resultados completos de esta validación para cada iteración se pueden ver en el anexo \ref{CAP:RES_EXP1}. La tabla \ref{tab:exp1_results} muestra un resumen de los resultados obtenidos en cada iteración.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        \textbf{Iteración} & \textbf{Precisión} & \textbf{Recall} & \textbf{F1-score} & \textbf{mAP} \\ \hline
+        0 & 0 & 0 & 0 & 0 \\ \hline
+        1 & 0 & 0 & 0 & 0 \\ \hline
+        2 & 0 & 0 & 0 & 0 \\ \hline
+        3 & 0 & 0 & 0 & 0 \\ \hline
+    \end{tabular}
+    \caption{Resultados obtenidos en cada iteración del experimento 1.}
+    \label{tab:exp1_results}
+\end{table}
+
