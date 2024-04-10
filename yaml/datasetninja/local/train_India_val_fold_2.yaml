@@ -1,10 +1,10 @@
-path: ../data/rdd2022-DatasetNinja/images
+path: ../tfg-informatica/data/rdd2022-DatasetNinja
 train:
-- India/fold_0/images
-- India/fold_1/images
-- India/fold_3/images
+- India/train/fold_0/images
+- India/train/fold_1/images
+- India/train/fold_3/images
 val:
-- India/fold_2/images
+- India/train/fold_2/images
 
 nc: 4
 names:

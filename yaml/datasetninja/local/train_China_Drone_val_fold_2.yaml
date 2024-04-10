@@ -1,10 +1,10 @@
-path: ../data/rdd2022-DatasetNinja/images
+path: ../tfg-informatica/data/rdd2022-DatasetNinja
 train:
-- China_Drone/fold_0/images
-- China_Drone/fold_1/images
-- China_Drone/fold_3/images
+- China_Drone/train/fold_0/images
+- China_Drone/train/fold_1/images
+- China_Drone/train/fold_3/images
 val:
-- China_Drone/fold_2/images
+- China_Drone/train/fold_2/images
 
 nc: 4
 names:

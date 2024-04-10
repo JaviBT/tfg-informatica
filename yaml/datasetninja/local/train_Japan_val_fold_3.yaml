@@ -1,10 +1,10 @@
-path: ../data/rdd2022-DatasetNinja/images
+path: ../tfg-informatica/data/rdd2022-DatasetNinja
 train:
-- Japan/fold_0/images
-- Japan/fold_1/images
-- Japan/fold_2/images
+- Japan/train/fold_0/images
+- Japan/train/fold_1/images
+- Japan/train/fold_2/images
 val:
-- Japan/fold_3/images
+- Japan/train/fold_3/images
 
 nc: 4
 names:
