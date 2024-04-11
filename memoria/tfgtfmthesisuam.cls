@@ -232,6 +232,10 @@
 \@ifpackageloaded{lipsum}{}{\RequirePackage{lipsum}}
 %\@ifpackageloaded{ucs}{}{\RequirePackage{[mathletters]{ucs}} % Extended unicode (utf-8) support
 
+% Paquetes adicionales añadidos por Fco Javier Barranco
+\usepackage{graphicx}
+\usepackage{rotating}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%                                              %%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%           Redefininng ex, em and pt               %%%%%%%%%%%%%%%%%%%%%
