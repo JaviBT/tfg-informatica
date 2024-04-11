@@ -5,7 +5,7 @@
 Este capítulo se centra en los experimentos realizados durante el desarrollo de este TFG. Para cada experimento se detallarán los pasos seguidos, los resultados obtenidos y las conclusiones extraídas. El TFG se ha realizado de forma iterativa, por lo que se han realizado varios experimentos para probar diferentes datos, configuraciones y modelos. Finalmente, se han incorporado todas las conclusiones extraídas de los experimentos en un modelo final que se ha evaluado en la plataforma de la CRDDC 2022 y que se presenta en el capítulo de resultados.
 
 
-\section{Experimento 1: Entrenamiento con datos de Estados Unidos y validación cruzada}
+\section{Experimento 1: Entrenamiento con datos de Estados Unidos y validación cruzada}\label{SEC:EXP1}
 
 El primer experimento relevante que se ha realizado en este TFG ha sido el entrenamiento de un modelo YOLOv8 con los datos de Estados Unidos de la CRDDC2022 y la validación cruzada de 4 \textit{folds}. En total se han realizado 4 iteraciones, una por cada \textit{fold}, y se han obtenido métricas de evaluación para cada iteración. El entrenamiento se ha llevado a cabo en Google Colab con una GPU Tesla T4 y ha durado aproximadamente 1 hora y 40 minutos por iteración. A continuación se detallan los pasos seguidos, los resultados obtenidos y las conclusiones extraídas.
 
@@ -13,17 +13,18 @@ Se ha optado por entrenar solo con los datos de Estados Unidos porque como se pu
 
 Se ha utilizado un modelo YOLOv8 de tamaño small y pre entrenado con el conjunto de datos, COCO ('yolov8s.pt'). Además, se ha utilizado un tamaño de batch de 50 durante 60 épocas para cada iteración. Estos hiperparámetros se han elegido para ajustarse a las limitaciones de memoria de la GPU Tesla T4 de Google Colab y para que el entrenamiento no dure demasiado tiempo.
 
-Una vez entrenado el modelo, hemos descargado los pesos y se ha realizado la validación de cada modelo con su correspondiente conjunto de validación. Para ello, se ha utilizado el notebook 'validate\_YOLO\_model.ipynb' que se puede encontrar en el repositorio del TFG \cite{TFG_Repository}. Los resultados completos de esta validación para cada iteración se pueden ver en el anexo \ref{CAP:RES_EXP1}. La tabla \ref{tab:exp1_results} muestra un resumen de los resultados obtenidos en cada iteración.
+Una vez entrenado el modelo, hemos descargado los pesos y se ha realizado la validación de cada modelo con su correspondiente conjunto de validación. Para ello, se ha utilizado el notebook 'validate\_YOLO\_model.ipynb' que se puede encontrar en el repositorio del TFG \cite{TFG_Repository}. Los resultados completos de esta validación para cada iteración se pueden ver en el anexo \ref{CAP:RES_EXP}. La tabla \ref{tab:exp1_results} muestra un resumen de los resultados obtenidos en cada iteración.
 
 \begin{table}[H]
     \centering
     \begin{tabular}{|c|c|c|c|c|}
         \hline
-        \textbf{Iteración} & \textbf{Precisión} & \textbf{Recall} & \textbf{F1-score} & \textbf{mAP} \\ \hline
-        0 & 0 & 0 & 0 & 0 \\ \hline
-        1 & 0 & 0 & 0 & 0 \\ \hline
-        2 & 0 & 0 & 0 & 0 \\ \hline
-        3 & 0 & 0 & 0 & 0 \\ \hline
+        \textbf{Iteración} & \textbf{Precisión} & \textbf{Recall} & \textbf{F1-score} & \textbf{mAP50} \\ \hline
+        0       & 0.630 & 0.685 & 0.656 & 0.706 \\ \hline
+        1       & 0.641 & 0.716 & 0.676 & 0.705 \\ \hline
+        2       & 0.680 & 0.677 & 0.678 & 0.717 \\ \hline
+        3       & 0.662 & 0.675 & 0.668 & 0.711 \\ \hline
+        Media   & 0.653 & 0.688 & 0.670 & 0.710 \\ \hline
     \end{tabular}
     \caption{Resultados obtenidos en cada iteración del experimento 1.}
     \label{tab:exp1_results}
