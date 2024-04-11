@@ -69,4 +69,12 @@ Las imágenes han sido capturadas con sistemas muy diferentes dependiendo del su
 
 En la tabla se puede ver que las imágenes de Noruega van a tener que ser redimensionadas para poder trabajar con ellas, ya que tienen una resolución mucho mayor que el resto de imágenes y que no es necesaria para el entrenamiento de nuestros modelos. También se puede ver que hay una gran variabilidad en los métodos de captura de imagen. Tendremos que tener en cuenta esta variabilidad a la hora de entrenar nuestros modelos, ya que si estos no son capaces de generalizar bien, podrían tener problemas a la hora de detectar daños en el pavimento en imágenes que no se parezcan a las del conjunto de entrenamiento, más adelante veremos cómo abordar este problema.
 
-A continuación, se muestran algunas imágenes de los datos de la CRDDC2022 con sus correspondientes anotaciones. Nótese la diferencia entre grietas longitudinales, transversales y de cocodrilo, y los baches. ...
+En la figura \ref{fig:example_images_region} se muestran algunas imágenes de los datos de la CRDDC2022 sin sus correspondientes anotaciones. Nótese la diferencia en la calidad y resolución de las imágenes, y la variabilidad en los entornos en los que se han tomado.
+
+% Añadimos las imágenes example_images_region de la carpeta images
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{img/example_images_regions.png}
+    \caption{Ejemplos de imágenes de los datos de la CRDDC2022.}
+    \label{fig:example_images_region}
+\end{figure}
