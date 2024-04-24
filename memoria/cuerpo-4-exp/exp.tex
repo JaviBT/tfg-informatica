@@ -36,10 +36,27 @@ Se debe considerar que este experimento se ha realizado con un modelo YOLOv8 de 
 
 Otra consideración importante para contextualizar estos resultados es que el ground truth de la CRDDC2022 no es perfecto. Es decir, existen daños en el pavimento que no han sido anotados, por lo que algunas de las predicciones del modelo se evalúan como falsos positivos cuando en realidad sí están indicando un daño real. Además, la CRDDC2022 evalúa cinco predicciones por imagen y el resto las ignoran. En este caso se ha optado por evaluar las cinco predicciones con mayor confianza, pero esto no quiere decir que solo existan esos cinco daños en la imagen. Estas limitaciones de la CRDDC2022 indican que el f1-score obtenido en el experimento 1 es una estimación conservadora de la capacidad de generalización del modelo.
 
+En las figuras \ref{fig:ground_truth_example_1} y \ref{fig:ground_truth_example_4} se pueden ver ejemplos de imágenes donde el ground truth no está completo y el modelo genera anotaciones que pese a ser correctas, no se evalúan como tal en la plataforma de la CRDDC2022. Estos ejemplos ilustran las limitaciones del ground truth y la evaluación de la CRDDC2022. El ejemplo de la figura \ref{fig:ground_truth_example_4} muestra también un caso donde el modelo genera varias anotaciones más pequeñas además de la anotación grande que vemos en el ground truth. Estas anotaciones pese a ser correctas son pequeñas y por lo tanto tendrán un pobre IoU con el ground truth, lo que hace que no se evalúen como correctas en la plataforma de la CRDDC2022, lo que penaliza el f1-score del modelo.
+
+% Añadimos img/ground_truth_example_1.png y img/ground_truth_example_4.png
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/ground_truth_example_1.png}
+    \caption{Ejemplo donde al ground truth le faltan anotaciones.}
+    \label{fig:ground_truth_example_1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/ground_truth_example_4.png}
+    \caption{Ejemplo donde el modelo genera varias anotaciones más pequeñas.}
+    \label{fig:ground_truth_example_4}
+\end{figure}
+
 \section{Experimento 2: YOLO de mayor tamaño y entrenamiento con todos los datos de Estados Unidos}\label{SEC:EXP2}
 
 Una de las principales conclusiones extraídas del experimento 1 es que probablemente se puede mejorar el rendimiento del modelo si se entrena con todos los datos anotados de Estados Unidos y se utiliza un modelo YOLOv8 de mayor tamaño. Por lo tanto, en este experimento se ha entrenado un modelo YOLOv8 de tamaño very large con todos los datos anotados de Estados Unidos. El objetivo de este experimento es comprobar si se puede mejorar el rendimiento del modelo y si se puede obtener un f1-score más alto en la plataforma de la CRDDC2022. Como vamos a usar todos los datos anotados para entrenar, no nos podemos fiar de ninguna validación, ya que inevitablemente se usaran imágenes vistas en entrenamiento para validar. Por lo tanto, no se ha realizado validación cruzada en este experimento.
 
-Se ha utilizado un modelo YOLOv8 de tamaño very large y pre entrenado con el conjunto de datos COCO ('yolov8x.pt'). Además, se ha utilizado un tamaño de batch de 15 durante 60 épocas. Estos hiperparámetros se han elegido para ajustarse a las limitaciones de memoria de la GPU Tesla T4 de Google Colab y para que el entrenamiento no dure demasiado tiempo. El entrenamiento ha durado 7 horas.
+Se ha utilizado un modelo YOLOv8 de tamaño very large y pre entrenado con el conjunto de datos COCO ('yolov8x.pt'). Además, se ha utilizado un tamaño de batch de 15 durante 60 épocas. Estos hiperparámetros se han elegido para ajustarse a las limitaciones de memoria de la GPU Tesla T4 de Google Colab y para que el entrenamiento no dure demasiado tiempo. El entrenamiento ha durado 7 horas. En el anexo \ref{CAP:RES_EXP} se pueden ver el resumen de este entrenamiento generado por Ultralytics.
 
 Una vez entrenado el modelo, se han realizado predicciones para las imágenes de test de Estados Unidos y se han subido a la plataforma de la CRDDC2022 para obtener un f1-score sobre los datos de test para los que no tenemos ground truth. El f1-score obtenido ha sido, \textbf{0.607}, lo cual supone una mejora de casi 18\% respecto al experimento 1.

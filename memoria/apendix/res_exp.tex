@@ -12,3 +12,14 @@ En la figura \ref{fig:exp1_val_output} se pueden ver los resultados de la valida
     \caption{Resultados de la validación de los modelos en cada iteración del experimento 1.}
     \label{fig:exp1_val_output}
 \end{figure}
+
+\section{Experimento 2: YOLO de mayor tamaño y entrenamiento con todos los datos de Estados Unidos}
+En la figura \ref{fig:exp2_val_output} se pueden ver el resultado de la validación del modelo del experimento 2. En este experimento se han entrenado con todos los datos anotados de Estados Unidos y se ha utilizado el fold 0 como conjunto de validación. Es decir, se ha validado con datos que también se han usado en el entrenamiento, por lo que estas metricas no son totalmente fiables. No obstante, como se explica en la sección \ref{SEC:EXP2}, el objetivo de este experimento es comprobar si se puede mejorar el rendimiento del modelo y si se puede obtener un f1-score más alto en la plataforma de la CRDDC2022 usando todos los datos para entrenar y un modelo YOLOv8 de mayor tamaño, en este caso, very large. El resultado del experimento ha sido favorable, ya que se ha subido de un f1-score de 0.515 en el experimento 1 a un f1-score de 0.607 en el experimento 2.
+
+% Añadimos ../img/exp2-val-output.png
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{../img/exp2-val-output.png}
+    \caption{Resultados de la validación de los modelos en cada iteración del experimento 2.}
+    \label{fig:exp2_val_output}
+\end{figure}
