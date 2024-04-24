@@ -30,3 +30,16 @@ Una vez entrenado el modelo, hemos descargado los pesos y se ha realizado la val
     \label{tab:exp1_results}
 \end{table}
 
+Adicionalmente, se han realizado predicciones para las imágenes de test de Estados Unidos y se han subido a la plataforma de la CRDDC2022 para obtener un f1-score sobre los datos de test para los que no tenemos ground truth. Las predicciones se han realizado con el notebook 'predict\_YOLO\_model.ipynb' y usando el modelo que usaba el fold 0 como conjunto de validación. El f1-score obtenido ha sido, \textbf{0.515}, lo que indica que el modelo generaliza bien a datos que no ha visto durante el entrenamiento.
+
+Se debe considerar que este experimento se ha realizado con un modelo YOLOv8 de tamaño small y los modelos solo se han entrenado con un 75\% de los datos anotados de Estados Unidos. Por lo tanto, aún hay margen de mejora si se usa un YOLOv8 de mayor tamaño y se entrena con todas las imágenes anotadas.
+
+Otra consideración importante para contextualizar estos resultados es que el ground truth de la CRDDC2022 no es perfecto. Es decir, existen daños en el pavimento que no han sido anotados, por lo que algunas de las predicciones del modelo se evalúan como falsos positivos cuando en realidad sí están indicando un daño real. Además, la CRDDC2022 evalúa cinco predicciones por imagen y el resto las ignoran. En este caso se ha optado por evaluar las cinco predicciones con mayor confianza, pero esto no quiere decir que solo existan esos cinco daños en la imagen. Estas limitaciones de la CRDDC2022 indican que el f1-score obtenido en el experimento 1 es una estimación conservadora de la capacidad de generalización del modelo.
+
+\section{Experimento 2: YOLO de mayor tamaño y entrenamiento con todos los datos de Estados Unidos}\label{SEC:EXP2}
+
+Una de las principales conclusiones extraídas del experimento 1 es que probablemente se puede mejorar el rendimiento del modelo si se entrena con todos los datos anotados de Estados Unidos y se utiliza un modelo YOLOv8 de mayor tamaño. Por lo tanto, en este experimento se ha entrenado un modelo YOLOv8 de tamaño very large con todos los datos anotados de Estados Unidos. El objetivo de este experimento es comprobar si se puede mejorar el rendimiento del modelo y si se puede obtener un f1-score más alto en la plataforma de la CRDDC2022. Como vamos a usar todos los datos anotados para entrenar, no nos podemos fiar de ninguna validación, ya que inevitablemente se usaran imágenes vistas en entrenamiento para validar. Por lo tanto, no se ha realizado validación cruzada en este experimento.
+
+Se ha utilizado un modelo YOLOv8 de tamaño very large y pre entrenado con el conjunto de datos COCO ('yolov8x.pt'). Además, se ha utilizado un tamaño de batch de 15 durante 60 épocas. Estos hiperparámetros se han elegido para ajustarse a las limitaciones de memoria de la GPU Tesla T4 de Google Colab y para que el entrenamiento no dure demasiado tiempo. El entrenamiento ha durado 7 horas.
+
+Una vez entrenado el modelo, se han realizado predicciones para las imágenes de test de Estados Unidos y se han subido a la plataforma de la CRDDC2022 para obtener un f1-score sobre los datos de test para los que no tenemos ground truth. El f1-score obtenido ha sido, \textbf{0.607}, lo cual supone una mejora de casi 18\% respecto al experimento 1.
