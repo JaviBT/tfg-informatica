@@ -235,6 +235,8 @@
 % Paquetes adicionales añadidos por Fco Javier Barranco
 \usepackage{graphicx}
 \usepackage{rotating}
+\usepackage{subcaption}
+\usepackage{subfigure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%                                              %%%%%%%%%%%%%%%%%%%%%%%%
@@ -1439,22 +1441,22 @@
 	\fi
 }
 
-\let\oldsubfigure\subfigure
-
-\renewcommand{\subfigure}[3][]
-{
-	\ifx&#2& \oldsubfigure[lof][]
-	{
-		\ifx&#1& \else \label{#1} \fi
-		#3
-	}
-	\else \oldsubfigure[lof][#2]
-	{
-		\ifx&#1& \else \label{#1} \fi
-		#3
-	}
-	\fi
-}
+%\let\oldsubfigure\subfigure
+%
+%\renewcommand{\subfigure}[3][]
+%{
+%	\ifx&#2& \oldsubfigure[lof][]
+%	{
+%		\ifx&#1& \else \label{#1} \fi
+%		#3
+%	}
+%	\else \oldsubfigure[lof][#2]
+%	{
+%		\ifx&#1& \else \label{#1} \fi
+%		#3
+%	}
+%	\fi
+%}
 
 
 \def\image#1#2#3{\@mypgfimage{#1}{#2}{#3}}

@@ -11,7 +11,7 @@ Siempre que se entrena un modelo de aprendizaje profundo, como los YOLO, buscamo
 \end{itemize}
 Para conseguir estos objetivos se deben tener en cuenta múltiples factores a la hora de preparar los datos y conjuntos de entrenamiento, validación y prueba; elegir el modelo; y configurar los parámetros de entrenamiento. En esta subsección se va a explicar cómo se han configurado los parámetros de entrenamiento y se van a dar algunas recomendaciones para entrenar modelos de detección de objetos.
 
-En el caso de los modelos YOLO, se debe tener en cuenta el tamaño de batch, el numero de épocas, el tamaño del modelo que se va a utilizar, la proporción de los datos anotados que se usa para entrenamiento y validación.
+En el caso de los modelos YOLO, se debe tener en cuenta el tamaño de batch, el numero de épocas, el tamaño del modelo que se va a utilizar, la proporción de los datos anotados que se usa para entrenamiento y validación. .........
 
 \subsection{Preparación de los datos}
 En la sección de modelos [Sección \ref{SEC:MODELOS}] se ha explicado cómo se ha usado YOLO de Ultralytics para la detección del estado del pavimento. La elección de dicha librería nos obliga a realizar una serie de transformaciones en los datos para poder entrenar nuestros modelos. En esta subsección se va a explicar cómo se han preparado los datos de la CRDDC2022 para poder ser usados con YOLO de Ultralytics. Estos cambios se pueden encontrar detallados en los notebooks 'prepare-DatasetNinja.ipynb' y 'dataToYoloFormat.ipynb' en el repositorio del TFG \cite{TFG_Repository}.
@@ -23,7 +23,7 @@ Ultralytics requiere que las anotaciones tengan un formato especifico para poder
 Donde \texttt{<clase>} es el índice de la clase del objeto, \texttt{<x>} y \texttt{<y>} son las coordenadas del centro de la caja delimitadora normalizadas, y \texttt{<width>} y \texttt{<height>} son el ancho y el alto de la caja delimitadora normalizados. Las coordenadas normalizadas se calculan dividiendo las coordenadas de la caja delimitadora por el ancho y el alto de la imagen, respectivamente. Esta transformación se han realizado con el notebook 'prepare-DatasetNinja.ipynb' en el repositorio del TFG \cite{TFG_Repository}. Se han realizado otros cambios menos significativos como reducir el tamaño de las imágenes de Noruega para que sea mas manejable en Google Colab.
 
 \subsection{Entrenamiento en Google Colabs}
-resumen
+resumen .......
 
 \subsection{Entrenamiento en VPULab}
-resumen
+resumen .......
