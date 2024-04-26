@@ -8,3 +8,7 @@
 - distribución de tamaños de las imágenes y su importancia para el entrenamiento.
 - distribución de ubicacion fisica de la imagen y necesidad de shuffle.
 - Las imagenes no estan perfectamente anotadas. Como consecuencia, los modelos tienen un rendimiento peor en las imagenes que no estan perfectamente anotadas.
+
+
+
+Comentar graficas de ultralytics para los exp 1 y exp 2. Comentar que con 60 epocas no llega a la asintota el loss asi que extendemos el entrenamiento.
