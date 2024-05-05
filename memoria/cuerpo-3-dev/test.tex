@@ -1,3 +1,11 @@
-[RESUMEN DE PARA QUE ES EL TEST]
+Una vez se ha implementado el modelo, se procede a realizar pruebas para verificar su correcto funcionamiento. Para ello, se utiliza el conjunto de datos de prueba, el cual no ha sido utilizado en ninguna etapa del proceso de entrenamiento. En el contexto de la CRDDC 2022, se dispone de un conjunto de datos de prueba que contiene imágenes sin anotar. Las predicciones sobre estas imágenes se envían a la plataforma de evaluación de la competición, la cual calcula las métricas de evaluación y devuelve los resultados. Adicionalmente, para evaluar la viabilidad del modelo en un entorno real, se debe evaluar la velocidad de inferencia del modelo para ver si es capaz de procesar imágenes en tiempo real.
 
-\subsection{Predicciones}
+El formato de las predicciones que se envían a la plataforma de evaluación de la CRDDC 2022 es un archivo CSV que contiene las coordenadas de las cajas delimitadoras de los objetos detectados en las imágenes. Cada fila del archivo corresponde con una imagen y contiene la información de las cajas delimitadoras de los objetos detectados en la imagen. El formato de cada caja delimitadora es el siguiente:
+
+\begin{center}
+    \texttt{image\_name, label x\_min y\_min x\_max y\_max}
+\end{center}
+
+Cada fila puede contener varias cajas delimitadoras, una por cada objeto detectado en la imagen. No obstante, solo se evalúan las 5 primeras cajas delimitadoras de cada imagen y se ignoran las restantes. Es por ello, que a la hora de generar el fichero de predicciones, es recomendable ordenar las cajas delimitadoras de mayor a menor confianza. Otro detalle importante es que las coordenadas deben estar en valor absoluto y no normalizadas. Por lo que es necesario pasar los valores normalizados generados por los modelos YOLO a valores absolutos.
+
+Una vez se han generado las predicciones, se procede a enviarlas a la plataforma de evaluación de la CRDDC 2022. La competición tiene cinco tablas de clasificación diferentes, una general para los seis países, y otras cuatro para India, Japón, Noruega y Estados Unidos por separados. Una vez se han enviado las predicciones, la plataforma calcula el f1-score y ordena a los participantes en función de este valor.

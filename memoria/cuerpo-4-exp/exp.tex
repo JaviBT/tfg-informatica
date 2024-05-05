@@ -53,6 +53,16 @@ En las figuras \ref{fig:ground_truth_example_1} y \ref{fig:ground_truth_example_
     \label{fig:ground_truth_example_4}
 \end{figure}
 
+En la figura \ref{fig:exp1-cv1-confusion_matrix_normalized} se puede ver la matriz de confusión de la segunda iteración del experimento 1 que es similar a las otras iteraciones. En esta matriz de confusión se observa que el modelo detecta la mayoría de grietas longitudinales, transversales y de piel de cocodrilo del ground truth, pero tiene más problemas con los baches. Esto probablemente se deba a que el conjunto de datos de Estados Unidos tiene pocos ejemplos de baches. Es probable que cuando se entrene con todos los datos el modelo generalice mejor a los baches e incremente la precisión para este tipo de daño. Adicionalmente, en la figura \ref{fig:exp1-cv1-confusion_matrix_normalized} se puede ver las predicciones de grietas que no aparecen en el ground truth y que penalizan el f1-score del modelo. Como ya se ha mencionado, en muchas cosas estas predicciones son o bien correctas y no aparecen en el ground truth o bien son correctas, pero se han generado varias anotaciones pequeñas en lugar de una grande.
+
+% Añadimos la imagen exp1-cv1-confusion_matrix_normalized.png
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{img/exp1-cv1-confusion_matrix_normalized.png}
+    \caption{Matriz de confusión normalizada de la segunda iteración del experimento 1.}
+    \label{fig:exp1-cv1-confusion_matrix_normalized}
+\end{figure}
+
 \section{Experimento 2: YOLO de mayor tamaño y entrenamiento con todos los datos de Estados Unidos}\label{SEC:EXP2}
 
 Una de las principales conclusiones extraídas del experimento 1 es que probablemente se puede mejorar el rendimiento del modelo si se entrena con todos los datos anotados de Estados Unidos y se utiliza un modelo YOLOv8 de mayor tamaño. Por lo tanto, en este experimento se ha entrenado un modelo YOLOv8 de tamaño very large con todos los datos anotados de Estados Unidos. El objetivo de este experimento es comprobar si se puede mejorar el rendimiento del modelo y si se puede obtener un f1-score más alto en la plataforma de la CRDDC2022. Como vamos a usar todos los datos anotados para entrenar, no nos podemos fiar de ninguna validación, ya que inevitablemente se usaran imágenes vistas en entrenamiento para validar. Por lo tanto, no se ha realizado validación cruzada en este experimento.
@@ -60,3 +70,13 @@ Una de las principales conclusiones extraídas del experimento 1 es que probable
 Se ha utilizado un modelo YOLOv8 de tamaño very large y pre entrenado con el conjunto de datos COCO ('yolov8x.pt'). Además, se ha utilizado un tamaño de batch de 15 durante 60 épocas. Estos hiperparámetros se han elegido para ajustarse a las limitaciones de memoria de la GPU Tesla T4 de Google Colab y para que el entrenamiento no dure demasiado tiempo. El entrenamiento ha durado 7 horas. En el anexo \ref{CAP:RES_EXP} se pueden ver el resumen de este entrenamiento generado por Ultralytics.
 
 Una vez entrenado el modelo, se han realizado predicciones para las imágenes de test de Estados Unidos y se han subido a la plataforma de la CRDDC2022 para obtener un f1-score sobre los datos de test para los que no tenemos ground truth. El f1-score obtenido ha sido, \textbf{0.607}, lo cual supone una mejora de casi 18\% respecto al experimento 1.
+
+Adicionalmente a este experimento, se ha realizado un entrenamiento de un YOLOv8 very large con el fold 0 como conjunto de validación y el resto como entrenamiento. Se han utilizado 150 épocas y un tamaño de batch de 15. El objetivo de este entrenamiento ha sido ver cuantas épocas son necesarias para que el modelo very large converja y si se puede mejorar el f1-score obtenido en el experimento 2. En la figura \ref{fig:exp2b-results} se pueden ver que para este entrenamiento con un 75\% de los datos anotados de Estados Unidos, el modelo converge en aproximadamente 90 épocas y a partir de ahí comienza a sobreajustar. De esto se puede concluir que el experimento 2 con un 100\% de los datos anotados de Estados Unidos y 60 épocas quizás podría haberse beneficiado de más épocas de entrenamiento.
+
+% Añadir la imagen exp2b-results.png
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{img/exp2b-results.png}
+    \caption{Resultados del entrenamiento del modelo YOLOv8 very large con el fold 0 como conjunto de validación.}
+    \label{fig:exp2b-results}
+\end{figure}

@@ -10,6 +10,4 @@ En el artículo “Crowdsensing-based Road Damage Detection Challenge (CRDDC’2
 
 Como se ha mencionado, en la CRDDC 2022 destaco el uso de los modelos YOLO. YOLO \cite{YOLO} es un modelo de detección de objetos en tiempo real que divide la imagen en una cuadrícula y predice las cajas delimitadoras y las clases de los objetos en cada celda de la cuadrícula. En este TFG se utilizará la implementación de YOLOv8 de Ultralytics \cite{yolov8_ultralytics}, que es una de las implementaciones más avanzadas y eficientes de YOLO. La librería de Python de Ultralytics proporciona una interfaz sencilla para entrenar, validar y predecir con modelos YOLO.
 
-
-
 Generalmente, en competiciones como la CRDDC, los modelos ganadores suelen ser ensembles complejos que combinan múltiples modelos de detección de objetos. Estos ensembles suelen combinar modelos de diferentes arquitecturas, como YOLO, Faster R-CNN, o EfficientDet, y se entrenan utilizando técnicas de transfer learning. En este trabajo buscaremos implementar un modelo más simple que no requiera tantas capacidades computacionales, pero que sea capaz de predecir daños en el pavimento con una buena precisión y eficacia en tiempo real. La idea es tener un modelo preciso, que generalice bien y que sea rápido, para poder ser implementado en un dispositivo móvil o en un vehículo.

@@ -1,9 +1,9 @@
 En esta sección se va a explicar cómo se ha entrenado el modelo de detección de estado del pavimento. Comenzaremos explicando los parámetros de entrenamiento y otras consideraciones que se deben tener en cuenta a la hora de entrenar un modelo de detección de objetos. Después, se explicará cómo se han preparado los datos de la CRDDC2022 para tener en cuenta estas consideraciones y adaptar los datos a las particularidades de la librería Ultralytics. Por último, se explicará los requerimientos de hardware necesarios para entrenar los modelos de detección de objetos y cómo se ha llevado a cabo el entrenamiento en Google Colab y en VPULab durante el desarrollo de este TFG.
 
 \subsection{Parámetros de entrenamiento y otras consideraciones}
-Al entrenar modelos de aprendizaje profundo, se busca lograr una buena generalización, altas puntuaciones de precisión y recall, así como un entrenamiento rápido y eficiente. En esta subsección, exploraremos los parámetros de entrenamiento y otras consideraciones clave para alcanzar estos objetivos en la detección de objetos.
+Al entrenar modelos de aprendizaje profundo, se busca lograr una buena generalización, altas puntuaciones de precisión y recall, así como un entrenamiento rápido y eficiente. Para lograr estos objetivos se debe escoger cuidadosamente los parámetros de entrenamiento y tener en cuenta otras consideraciones clave.
 
-En el caso de los modelos YOLO, se debe tener en cuenta el tamaño del modelo en número de parámetros, el tamaño de batch, el número de épocas de entrenamiento, la proporción de los datos anotados que se usa para entrenamiento y validación.
+En el caso de los modelos YOLO, se pueden ajustar el tamaño del modelo en número de parámetros, el tamaño de batch, el número de épocas de entrenamiento, y la proporción de los datos anotados que se usa para entrenamiento y validación.
 
 YOLOv8 de Ultralytics tiene varios tamaños de modelo que se pueden usar. Los tamaños disponibles son 'nano', 'small', 'medium', 'large' y 'very large'. Por lo general, para cualquier conjunto de datos, a mayor tamaño de modelo, mejor será la precisión del modelo y más latencia o tiempo de inferencia se necesitará. Además, a mayor tamaño de modelo, más memoria y tiempo de entrenamiento se necesitará. Por lo tanto, se debe elegir el tamaño de modelo que mejor se ajuste a las necesidades del proyecto. En la figura \ref{fig:yolo-comparison-plots}, extraída de la documentación de Ultralytics \cite{yolov8_ultralytics}, se puede ver una comparación de los tamaños de los modelos YOLO de Ultralytics. Las gráficas muestran que YOLOv8 es la versión de YOLO con mejor mAP50-95 y que a mayor tamaño de modelo, mejor es la precisión del modelo. En la gráfica de la derecha se muestra que el tamaño de modelo también afecta negativamente a la velocidad de inferencia. El modelo 'nano' es el más rápido, pero también el menos preciso, mientras que el modelo 'very large' es el más preciso, pero también el más lento y el 'large' es el mejor equilibrio entre precisión y velocidad.
 
@@ -17,6 +17,18 @@ YOLOv8 de Ultralytics tiene varios tamaños de modelo que se pueden usar. Los ta
 
 El número de épocas de entrenamiento y el tamaño de batch son dos hiperparámetros que determinan la cantidad de tiempo que se necesita para entrenar un modelo, la cantidad de memoria que se necesita y la velocidad de convergencia del modelo. Por lo general, a mayor número de épocas de entrenamiento, mejor será la precisión del modelo, pero también se corre el riesgo de sobreajustar el modelo al conjunto de entrenamiento. Por otro lado, a mayor tamaño de batch, más memoria se necesita, pero también se puede acelerar el entrenamiento. Por lo tanto, se debe elegir un número de épocas y un tamaño de batch que se ajuste a la capacidad de computación disponible. En el caso de los modelos de Computer Vision, la capacidad de computación suele ser la limitación más importante, ya que los modelos de detección de objetos suelen ser muy grandes y necesitan mucha memoria y tiempo para entrenar.
 
+Es recomendable comenzar con un número de épocas elevado para comprobar si el modelo se sobreajusta y luego reducir o incrementar el número de épocas según sea necesario. Para determinar si el modelo se sobreajusta, se puede observar las curvas de pérdida en el conjunto de validación y ver si la pérdida en el conjunto de validación comienza a aumentar mientras que la pérdida en el conjunto de entrenamiento sigue disminuyendo. En la figura \ref{fig:example_results} se puede ver un ejemplo de resultados de un modelo YOLOv8 de Ultralytics. En las curvas de pérdida, box\_loss y dfl\_loss, se puede ver que el modelo se sobreajusta después de 90 épocas.
+
+El tamaño de batch se suele elegir en función de la capacidad de memoria de la GPU. Por lo general, se recomienda usar el tamaño de batch más grande que quepa en la memoria de la GPU para acelerar el entrenamiento. Sin embargo, si el tamaño de batch es demasiado grande, se puede producir un desbordamiento de memoria y el entrenamiento fallará. Un peligro de usar un tamaño de batch pequeño es que se generan estadísticas de normalización de lote (\textbf{batch normalization statistics}) deficientes. Estas estadísticas son necesarias en el entrenamiento de modelos de aprendizaje profundo, ya que permiten normalizar los valores de las capas de la red neuronal y acelerar el entrenamiento. Si el tamaño de batch es demasiado pequeño, el rendimiento del modelo puede verse afectado negativamente y el entrenamiento puede ser más inestable, es decir, la pérdida puede oscilar más y el modelo puede tardar más en converger.
+
+% Añadir gráfica de example_results.png
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{graphs/example_results.png}
+    \caption{Ejemplo de resultados de un modelo YOLOv8 de Ultralytics. En las curvas de perdida, box\_loss y dfl\_loss, se puede ver que el modelo se sobreajusta después de 90 épocas.}
+    \label{fig:example_results}
+\end{figure}
+
 \subsection{Preparación de los datos}
 En la sección de modelos [Sección \ref{SEC:MODELOS}] se ha explicado cómo se ha usado YOLO de Ultralytics para la detección del estado del pavimento. La elección de dicha librería nos obliga a realizar una serie de transformaciones en los datos para poder entrenar nuestros modelos. En esta subsección se va a explicar cómo se han preparado los datos de la CRDDC2022 para poder ser usados con YOLO de Ultralytics. Estos cambios se pueden encontrar detallados en los notebooks 'prepare-DatasetNinja.ipynb' y 'dataToYoloFormat.ipynb' en el repositorio del TFG \cite{TFG_Repository}.
 
@@ -27,7 +39,34 @@ Ultralytics requiere que las anotaciones tengan un formato especifico para poder
 Donde \texttt{<clase>} es el índice de la clase del objeto, \texttt{<x>} y \texttt{<y>} son las coordenadas del centro de la caja delimitadora normalizadas, y \texttt{<width>} y \texttt{<height>} son el ancho y el alto de la caja delimitadora normalizados. Las coordenadas normalizadas se calculan dividiendo las coordenadas de la caja delimitadora por el ancho y el alto de la imagen, respectivamente. Esta transformación se han realizado con el notebook 'prepare-DatasetNinja.ipynb' en el repositorio del TFG \cite{TFG_Repository}. Se han realizado otros cambios menos significativos como reducir el tamaño de las imágenes de Noruega para que sea mas manejable en Google Colab.
 
 \subsection{Entrenamiento en Google Colabs}
-resumen .......
+El entrenamiento de la mayoría de experimentos de este trabajo se han realizado en Google Colabs. Para ello, se ha desarrollado un notebook de Google Colabs llamado 'train-YOLOv8.ipynb' en el repositorio del TFG \cite{TFG_Repository}. Este notebook se encarga de instalar las dependencias necesarias, montar Google Drive para acceder a los datos y a los ficheros de configuración .yaml, copiar los datos de Google Drive a la máquina virtual de Google Colabs, entrenar el modelo YOLOv8 con los datos y configuración proporcionados, y descargar los pesos del modelo entrenado a Google Drive. Adicionalmente, el notebook permite reanudar el entrenamiento de un modelo previamente entrenado. Este notebook lo ejecutaba en Google Colabs con una GPU Tesla T4, que es una GPU de gama media con 16 GB de memoria y 320 Turing Tensor Cores.
 
 \subsection{Entrenamiento en VPULab}
 resumen .......
+
+
+\subsection{Validación cruzada}
+
+La validación es una parte fundamental en el desarrollo de modelos de aprendizaje automático, ya que permite comprobar si el modelo es capaz de generalizar bien a datos que no ha visto antes. En este trabajo he optado por realizar una validación cruzada de 4 \textit{folds} como técnica de validación.
+
+La validación cruzada es una técnica que se utiliza para evaluar la capacidad de generalización de un modelo de aprendizaje automático. Consiste en dividir el conjunto de datos en $k$ subconjuntos, llamados \textit{folds}, y entrenar el modelo $k$ veces, cada vez utilizando un subconjunto distinto como conjunto de validación y el resto de subconjuntos como conjunto de entrenamiento. De esta forma, se obtienen $k$ métricas de evaluación distintas, una por cada iteración, y se pueden calcular métricas de evaluación globales como la media y la desviación estándar de las métricas de evaluación de cada iteración. En la figura \ref{fig:cross_validation} se puede ver un esquema de cómo se lleva a cabo la validación cruzada.
+
+% Añadir la imagen K-fold_cross_validation.jpg de la carpeta img
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/K-fold_cross_validation.jpg}
+    \caption{Esquema de cómo se lleva a cabo la validación cruzada. \cite{KFoldCV_image}}
+    \label{fig:cross_validation}
+\end{figure}
+
+En este TFG se ha llevado a cabo una validación cruzada de 4 \textit{folds} para evaluar los modelos. Es decir, cada iteración se ha entrenado con un 75\% de los datos anotados y se ha validado con el 25\% restante. Para dividir los datos se han separado las carpetas de train de cada región en 4 subcarpetas fold\_0, fold\_1, fold\_2 y fold\_3. Cada una de estas subcarpetas contiene un 25\% de las imágenes y anotaciones de la carpeta de train correspondiente. De esta forma, cuando vamos a crear el fichero \textit{.yaml} que contiene la información de los datos de entrenamiento y validación, simplemente concatenamos las rutas de las subcarpetas fold\_0, fold\_1, fold\_2 y fold\_3 para obtener los datos de entrenamiento y validación de cada iteración. Además de esta forma nos aseguramos que al entrenar con los datos de varias regiones, el modelo entrena con datos de todas las regiones de forma proporcional al número de imágenes de cada región. Esto es importante para que el modelo no se sobre ajuste a una región en concreto y sea capaz de generalizar bien a datos de todas las regiones. Véase como ejemplo de un fichero \textit{.yaml} en la figura \ref{fig:yaml_example}.
+
+% Añadir el código de un .yaml como ejemplo
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/yaml_example.png}
+    \caption{Ejemplo de un fichero \textit{.yaml} que contiene la información de los datos de entrenamiento y validación para entrenar un modelo YOLO con las imágenes y anotaciones de EEUU de la CRDDC2022.}
+    \label{fig:yaml_example}
+\end{figure}
+
+Otra consideración importante cuando creamos los \textit{folds} es que las imágenes de una misma secuencia de imagenes, por ejemplo las imágenes de una misma calle, contienen información muy similar. Por lo tanto, podemos barajar (shuffle) las imágenes antes de separar en folds para maximizar la información que hay en cada fold y de esta forma aumentar la capacidad de generalización de nuestro modelo. La desventaja de esta técnica es que dos imágenes pertenecientes a una misma secuencia de imágenes pueden acabar una en el conjunto de entrenamiento y otra en el conjunto de validación, lo que puede hacer que el modelo se sobre ajuste a esta secuencia de imágenes, ya que la puntuación de precisión y recall será muy alta al ser las imágenes muy parecidas. No obstante, en este TFG se ha decidido barajar las imágenes antes de separar en folds, ya que se considera que la ventaja de maximizar la información en cada fold es más importante que la desventaja de que el modelo se sobre ajuste a una secuencia de imágenes.
