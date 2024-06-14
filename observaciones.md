@@ -12,3 +12,11 @@
 
 
 Comentar graficas de ultralytics para los exp 1 y exp 2. Comentar que con 60 epocas no llega a la asintota el loss asi que extendemos el entrenamiento.
+
+
+
+
+
+Añadir más información sobre los métodos utilizados para obtener las imágenes y anotarlas
+Añadir información sobre como funciona YOLO por dentro. Arquitectura y demás en SOTO.
+Añadir más información sobre como se organiza la competición, participantes y soluciones ganadoras.

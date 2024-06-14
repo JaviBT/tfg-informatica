@@ -1,4 +1,4 @@
-Los datos utilizados provienen de la competición Crowdsensing-based Road Damage Detection Challenge (CRDDC2022). Se trata de un conjunto de datos con imágenes de carreteras, etiquetadas con la presencia de daños en el pavimento. Los datos provienen de seis países: China, República Checa, India, Japón, Noruega y Estados Unidos. Cada uno de estos países tiene un conjunto de datos que consiste en imágenes de carreteras tomadas desde un vehículo en movimiento. Además, China también proporciona un conjunto de datos con imágenes tomadas desde un dron, sumando un total de siete conjuntos de datos. Estos conjuntos de datos se dividen a su vez en entrenamiento y test, donde el conjunto de entrenamiento se compone de imágenes con sus respectivas etiquetas de daños en el pavimento, y el conjunto de test se compone de imágenes sin etiquetar. Las etiquetas de daños en el pavimento se proporcionan en forma de coordenadas de caja delimitadora (\textbf{bounding box}) y una etiqueta que representa el tipo de daño asociado a la caja. 
+Los datos utilizados provienen de la competición Crowdsensing-based Road Damage Detection Challenge (CRDDC2022)\cite{CRDDC2022_paper}. Se trata de un conjunto de datos con imágenes de carreteras, etiquetadas con la presencia de daños en el pavimento. Los datos provienen de seis países: China, República Checa, India, Japón, Noruega y Estados Unidos. Cada uno de estos países tiene un conjunto de datos que consiste en imágenes de carreteras tomadas desde un vehículo en movimiento. Además, China también proporciona un conjunto de datos con imágenes tomadas desde un dron, sumando un total de siete conjuntos de datos. Estos conjuntos de datos se dividen a su vez en entrenamiento y test, donde el conjunto de entrenamiento se compone de imágenes con sus respectivas etiquetas de daños en el pavimento, y el conjunto de test se compone de imágenes sin etiquetar. Las etiquetas de daños en el pavimento se proporcionan en forma de coordenadas de caja delimitadora (bounding box\footnote{Bounding box o caja delimitadora es un rectángulo que se utiliza en visión por computadora para definir la posición y el tamaño de un objeto dentro de una imagen. Es el término comúnmente utilizado en el campo.}) y una etiqueta que representa el tipo de daño asociado a la caja. 
 
 Los organizadores de la competición han publicado un paper \cite{RDD2022_data_paper} donde se detallan los datos y se proporciona una descripción de los mismos. En esta sección se va a hacer un resumen de los datos y se va a explicar cómo se estructuran, qué información contienen y cómo son las imágenes.
 
@@ -16,9 +16,9 @@ Las anotaciones como hemos dicho pueden venir en formato \texttt{xml} o \texttt{
 \begin{itemize}
     \item \texttt{filename}: Nombre de la imagen.
     \item \texttt{size}: Tamaño de la imagen en píxeles.
-    \item \texttt{objects}: Lista de objetos en la imagen. Cada objeto contiene:
+    \item \texttt{objects}: Lista de objetos en la imagen. Cada objeto corresponde a un daño en el pavimento y contiene la siguiente información:
     \begin{itemize}
-        \item \texttt{name}: Nombre de la clase del objeto.
+        \item \texttt{id}: Identificador de clase de daño de pavimento.
         \item \texttt{bndbox}: Coordenadas de la caja delimitadora del objeto.
     \end{itemize}
 \end{itemize}
@@ -27,10 +27,10 @@ Es importante mencionar que las coordenadas de la caja delimitadora se proporcio
 Los datos originales contienen hasta 11 clases distintas de etiquetas de daños en el pavimento. Estas clases son: \texttt{D00, D20, D10, D40, D44, D50, D43, D01, D11, Repair, Block Crack}. No obstante, en la competición solo se consideran las cuatro primeras clases, que son las más comunes y resumen la mayoría de los daños en el pavimento. Estas clases tienen los siguientes significados:
 
 \begin{itemize}
-    \item \texttt{D00}: Longitudinal crack o grieta longitudinal.
-    \item \texttt{D10}: Transverse crack o grieta transversal.
-    \item \texttt{D20}: Alligator crack o grieta de cocodrilo.
-    \item \texttt{D40}: Pothole o bache.
+    \item \texttt{D00}: Longitudinal crack o \textit{grieta longitudinal}.
+    \item \texttt{D10}: Transverse crack o \textit{grieta transversal}.
+    \item \texttt{D20}: Alligator crack o \textit{grieta de cocodrilo}.
+    \item \texttt{D40}: Pothole o \textit{bache}.
 \end{itemize}
 
 En la figura \ref{fig:example_damage_types} se pueden ver ejemplos de los tipos de daños en el pavimento de la CRDDC2022. Nótese que solo se han marcado los daños en el pavimento correspondientes a la clase que se quiere mostrar en cada imagen.
@@ -77,7 +77,7 @@ Las imágenes han sido capturadas con sistemas muy diferentes dependiendo del su
     \label{tab:dataset_info}
 \end{table}
 
-En la tabla se puede ver que las imágenes de Noruega van a tener que ser redimensionadas para poder trabajar con ellas, ya que tienen una resolución mucho mayor que el resto de imágenes y que no es necesaria para el entrenamiento de nuestros modelos. La librería de Ultralytics se encarga de redimensionar las imágenes automáticamente durante el entrenamiento, por lo que el motivo principal de redimensionar las imágenes manualmente es reducir su tamaño en disco y facilitar su transferencia y almacenamiento. También se puede ver que hay una gran variabilidad en los métodos de captura de imagen. Tendremos que tener en cuenta esta variabilidad a la hora de entrenar nuestros modelos, ya que si estos no son capaces de generalizar bien, podrían tener problemas a la hora de detectar daños en el pavimento en imágenes que no se parezcan a las del conjunto de entrenamiento, más adelante veremos cómo abordar este problema.
+La resolución de las imágenes es un parámetro crucial, ya que afecta el tiempo de entrenamiento, la precisión, la complejidad y el tiempo de inferencia del modelo. Los modelos YOLO de Ultralytics redimensionan todas las imágenes antes de alimentarlas al modelo. Este redimensionado se controla con el parámetro imgsz, que se fija durante el entrenamiento del modelo. Todas las imágenes se redimensionan a imgsz en su lado más largo, manteniendo la relación de aspecto y añadiendo letterboxing\footnote{Letterboxing es la técnica de redimensionar imágenes a otras dimensiones preservando la relación de aspecto mediante la adición de barras negras o grises para rellenar los espacios sobrantes.} cuando sea necesario. Para el entrenamiento de los modelos, he utilizado el imgsz predeterminado de Ultralytics, 640. En la tabla \ref{tab:dataset_info} se observa que las imágenes de Noruega tienen una resolución mucho mayor que esta resolución predeterminada. Por ello, he decidido redimensionar las imágenes de Noruega a un tamaño inferior, manteniendo la relación de aspecto, para reducir su tamaño en disco y facilitar su transferencia y almacenamiento. En la tabla \ref{tab:dataset_info} también se muestra una gran variabilidad en los métodos de captura de imagen. Debemos tener en cuenta esta variabilidad al entrenar nuestros modelos, ya que si no son capaces de generalizar bien, podrían tener problemas al detectar daños en el pavimento en imágenes que no se parezcan a las del conjunto de entrenamiento. Más adelante, veremos cómo abordar este problema.
 
 En la figura \ref{fig:example_images_region} se muestran algunas imágenes de los datos de la CRDDC2022 sin sus correspondientes anotaciones. Nótese la diferencia en la calidad y resolución de las imágenes, y la variabilidad en los entornos en los que se han tomado.
 

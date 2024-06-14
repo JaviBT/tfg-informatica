@@ -71,7 +71,7 @@ Se ha utilizado un modelo YOLOv8 de tamaño very large y pre entrenado con el co
 
 Una vez entrenado el modelo, se han realizado predicciones para las imágenes de test de Estados Unidos y se han subido a la plataforma de la CRDDC2022 para obtener un f1-score sobre los datos de test para los que no tenemos ground truth. El f1-score obtenido ha sido, \textbf{0.607}, lo cual supone una mejora de casi 18\% respecto al experimento 1.
 
-Adicionalmente a este experimento, se ha realizado un entrenamiento de un YOLOv8 very large con el fold 0 como conjunto de validación y el resto como entrenamiento. Se han utilizado 150 épocas y un tamaño de batch de 15. El objetivo de este entrenamiento ha sido ver cuantas épocas son necesarias para que el modelo very large converja y si se puede mejorar el f1-score obtenido en el experimento 2. En la figura \ref{fig:exp2b-results} se pueden ver que para este entrenamiento con un 75\% de los datos anotados de Estados Unidos, el modelo converge en aproximadamente 90 épocas y a partir de ahí comienza a sobreajustar. De esto se puede concluir que el experimento 2 con un 100\% de los datos anotados de Estados Unidos y 60 épocas quizás podría haberse beneficiado de más épocas de entrenamiento.
+Adicionalmente a este experimento, se ha realizado un entrenamiento de un YOLOv8 very large con el fold 0 como conjunto de validación y el resto como entrenamiento. Se han utilizado 150 épocas y un tamaño de batch de 15. El objetivo de este entrenamiento ha sido ver cuantas épocas son necesarias para que el modelo very large converja y si se puede mejorar el f1-score obtenido en el experimento 2. En las gráficas de 'val\/box\_loss' y 'val\/dfs\_loss' de la figura \ref{fig:exp2b-results} se pueden ver que para este entrenamiento con un 75\% de los datos anotados de Estados Unidos, el modelo converge en aproximadamente 90 épocas y a partir de ahí comienza a sobreajustar. De esto se puede concluir que el experimento 2 con un 100\% de los datos anotados de Estados Unidos y 60 épocas quizás podría haberse beneficiado de más épocas de entrenamiento.
 
 % Añadir la imagen exp2b-results.png
 \begin{figure}[H]
@@ -80,3 +80,5 @@ Adicionalmente a este experimento, se ha realizado un entrenamiento de un YOLOv8
     \caption{Resultados del entrenamiento del modelo YOLOv8 very large con el fold 0 como conjunto de validación.}
     \label{fig:exp2b-results}
 \end{figure}
+
+Se ha intentado aplicar esta conclusión para mejorar el f1-score del experimento 2 extendiendo el entrenamiento con el 100\% de los datos de entrenamiento de 60 a 120 épocas. Sin embargo, el f1-score obtenido en la plataforma ha sido de \textbf{0.604}, casi el mismo que en el experimento 2. Esto indica que el modelo o bien ya convergía en 60 épocas o bien pierde f1-score por sobreajuste con 120 épocas. Como se han usado todos los datos de entrenamiento, no se puede saber si el modelo ha sobreajustado mirando los resultados de validación.
