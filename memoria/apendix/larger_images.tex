@@ -9,6 +9,7 @@ Este apéndice contiene imágenes de mayor tamaño que no caben en el cuerpo del
         \hline
         \textbf{Imagen} & \textbf{Descripción} \\ \hline
         \ref{fig:example_damage_types_large} & Ejemplos de los tipos de daños en el pavimento de la CRDDC2022. \\ \hline
+        \ref{fig:datasetNinja_class_count_bar_large} & Número de anotaciones por clase en los datos de la CRDDC2022. \\ \hline
         \ref{fig:example_images_region_large} & Ejemplos de imágenes de los datos de la CRDDC2022. \\ \hline
     \end{tabular}
     \caption{Imágenes adicionales mostradas en este apéndice.}
@@ -16,11 +17,26 @@ Este apéndice contiene imágenes de mayor tamaño que no caben en el cuerpo del
 \end{table}
 
 % Añadimos img/example_damage_types_grid.png en tamaño grande ocupando toda la página en horizontal
-\begin{figure}[H]
+\begin{figure}
     \centering
     \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{img/example_damage_types_grid.png}
     \caption{Ejemplos de los tipos de daños en el pavimento de la CRDDC2022. Solo se han marcado los daños en el pavimento correspondientes a la clase que se quiere mostrar.}
     \label{fig:example_damage_types_large}
+\end{figure}
+
+% Añadimos figura con ../graphs/datasetNinja_class_count_bar.png y ../graphs/datasetNinja_class_count_by_region_bar.png en tamaño grande ocupando toda la página en vertical
+\begin{figure}
+    \centering
+    \subfigure[Numero de anotaciones por clase]{
+        \includegraphics[width=0.9\textwidth]{../graphs/datasetNinja_class_count_bar.png}
+        \label{fig:datasetNinja_class_count_bar_subfig1}
+    }
+    \subfigure[Numero de anotaciones por clase y región]{
+        \includegraphics[width=0.9\textwidth]{../graphs/datasetNinja_class_count_by_region_bar.png}
+        \label{fig:datasetNinja_class_count_bar_subfig2}
+    }
+    \caption{Número de anotaciones por clase en los datos de la CRDDC2022.}
+    \label{fig:datasetNinja_class_count_bar_large}
 \end{figure}
 
 % Añadimos img/example_images_regions.png en tamaño grande ocupando toda la página en vertical

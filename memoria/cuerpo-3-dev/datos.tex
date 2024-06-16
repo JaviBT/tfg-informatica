@@ -1,4 +1,4 @@
-Los datos utilizados provienen de la competición Crowdsensing-based Road Damage Detection Challenge (CRDDC2022)\cite{CRDDC2022_paper}. Se trata de un conjunto de datos con imágenes de carreteras, etiquetadas con la presencia de daños en el pavimento. Los datos provienen de seis países: China, República Checa, India, Japón, Noruega y Estados Unidos. Cada uno de estos países tiene un conjunto de datos que consiste en imágenes de carreteras tomadas desde un vehículo en movimiento. Además, China también proporciona un conjunto de datos con imágenes tomadas desde un dron, sumando un total de siete conjuntos de datos. Estos conjuntos de datos se dividen a su vez en entrenamiento y test, donde el conjunto de entrenamiento se compone de imágenes con sus respectivas etiquetas de daños en el pavimento, y el conjunto de test se compone de imágenes sin etiquetar. Las etiquetas de daños en el pavimento se proporcionan en forma de coordenadas de caja delimitadora (bounding box\footnote{Bounding box o caja delimitadora es un rectángulo que se utiliza en visión por computadora para definir la posición y el tamaño de un objeto dentro de una imagen. Es el término comúnmente utilizado en el campo.}) y una etiqueta que representa el tipo de daño asociado a la caja. 
+Los datos utilizados provienen de la competición Crowdsensing-based Road Damage Detection Challenge (CRDDC2022)\cite{CRDDC2022_paper}. Se trata de un conjunto de datos con imágenes de carreteras, etiquetadas con la presencia de daños en el pavimento. Los datos provienen de seis países: China, República Checa, India, Japón, Noruega y Estados Unidos. Cada uno de estos países tiene un conjunto de datos que consiste en imágenes de carreteras tomadas desde un vehículo en movimiento. Además, China también proporciona un conjunto de datos con imágenes tomadas desde un dron, sumando un total de siete conjuntos de datos. Estos conjuntos de datos se dividen a su vez en entrenamiento y test, donde el conjunto de entrenamiento se compone de imágenes con sus respectivas etiquetas de daños en el pavimento, y el conjunto de test se compone de imágenes sin etiquetar. Las etiquetas de daños en el pavimento se proporcionan en forma de coordenadas de caja delimitadora (\textit{bounding box}\footnote{Bounding box o caja delimitadora es un rectángulo que se utiliza en visión por computadora para definir la posición y el tamaño de un objeto dentro de una imagen. Es el término comúnmente utilizado en el campo.}) y una etiqueta que representa el tipo de daño asociado a la caja. 
 
 Los organizadores de la competición han publicado un paper \cite{RDD2022_data_paper} donde se detallan los datos y se proporciona una descripción de los mismos. En esta sección se va a hacer un resumen de los datos y se va a explicar cómo se estructuran, qué información contienen y cómo son las imágenes.
 
@@ -33,6 +33,8 @@ Los datos originales contienen hasta 11 clases distintas de etiquetas de daños 
     \item \texttt{D40}: Pothole o \textit{bache}.
 \end{itemize}
 
+Las clases descartadas son: \texttt{D01} grietas longitudinales debido a una mala construcción de la junta longitudinal; \texttt{D11} grietas transversales debido a una mala construcción de la junta transversal; \texttt{D43} paso de peatones borrado; \texttt{D44} pintura borrada; \texttt{D50} tapa de alcantarilla; \texttt{Repair} reparación de pavimento; y \texttt{Block Crack} grieta en bloque. Algunas de estas clases se han fusionado con otras, como \texttt{D01} con \texttt{D00} o \texttt{D11} con \texttt{D10}. Otras clases se han descartado por no ser relevantes para la detección de daños en el pavimento, por falta de anotaciones o por no ser consistentes en todos los conjuntos de datos.
+
 En la figura \ref{fig:example_damage_types} se pueden ver ejemplos de los tipos de daños en el pavimento de la CRDDC2022. Nótese que solo se han marcado los daños en el pavimento correspondientes a la clase que se quiere mostrar en cada imagen.
 
 % Añadimos la imagen example_damage_types_h de la carpeta images
@@ -45,13 +47,39 @@ En la figura \ref{fig:example_damage_types} se pueden ver ejemplos de los tipos 
 
 El conjunto de datos de descargado de DatasetNinja tiene la ventaja de que ya agrupa todas las clases que se van a ignorar en la competición en una sola clase llamada \texttt{Other Corruption}. Esto facilita el trabajo con los datos, ya que no es necesario hacer esta agrupación manualmente. En la figura \ref{fig:datasetNinja_class_count_bar} se puede ver el número de anotaciones por clase en los datos de la CRDDC2022.
 
-% Añadimos las gráficas daatasetNinja_class_count_bar y datasetNinja_class_distribution_pie de la carpeta graphs
+% Añadimos las gráficas daatasetNinja_class_count_bar y datasetNinja_class_count_by_region_bar como subfiguras
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{graphs/datasetNinja_class_count_bar.png}
-    \caption{Número de anotaciones por clase en los datos de la CRDDC2022.}
+    \subfigure[Numero de anotaciones por clase]{
+        \includegraphics[width=0.45\textwidth]{../graphs/datasetNinja_class_count_bar.png}
+        \label{fig:datasetNinja_class_count_bar_subfig1}
+    }
+    \subfigure[Numero de anotaciones por clase y región]{
+        \includegraphics[width=0.45\textwidth]{../graphs/datasetNinja_class_count_by_region_bar.png}
+        \label{fig:datasetNinja_class_count_bar_subfig2}
+    }
+    \caption{Número de anotaciones por clase en los datos de la CRDDC2022. Versión ampliada de la figura \ref{fig:datasetNinja_class_count_bar_large}.}
     \label{fig:datasetNinja_class_count_bar}
 \end{figure}
+
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|l|r|r|r|r|r|}
+    \hline
+    \textbf{} & \textbf{D00: Longitudinal Crack} & \textbf{D10: Transverse Crack} &\textbf{D20: Alligator Crack} & \textbf{D40: Potholes}  & \textbf{Other Corruption} \\ \hline
+    \textbf{China\_Drone}       & 1426  & 1263  & 293   & 86    & 0     \\ \hline
+    \textbf{China\_MotorBike}   & 2678  & 1096  & 641   & 235   & 0     \\ \hline
+    \textbf{Czech}              & 988   & 399   & 161   & 197   & 0     \\ \hline
+    \textbf{India}              & 1735  & 113   & 2021  & 3187  & 1119  \\ \hline
+    \textbf{Japan}              & 4049  & 3979  & 6199  & 2243  & 4731  \\ \hline
+    \textbf{Norway}             & 8570  & 1730  & 468   & 461   & 0     \\ \hline
+    \textbf{United\_States}     & 6750  & 3295  & 834   & 135   & 0     \\ \hline
+    \end{tabular}
+    }
+    \caption{Número de anotaciones por clase y región en los datos de la CRDDC2022.}
+    \label{tab:crddc2022_solutions}
+\end{table}
 
 
 \subsection{¿Cómo son las imágenes?}
