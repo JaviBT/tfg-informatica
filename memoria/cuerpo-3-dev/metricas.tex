@@ -2,9 +2,9 @@
 % Métricas de evaluación utilizadas en el desarrollo del TFG
 % Alt + z o Option + z para activar el word wrap en Visual Studio Code
 
-Las métricas de evaluación son una parte fundamental en el desarrollo de modelos de visión por computador. Permiten cuantificar el rendimiento de los modelos y comparar diferentes modelos entre sí. En este TFG se han utilizado varias métricas de evaluación para evaluar los modelos de detección de daños en pavimentos. En este capítulo se detallan las métricas de evaluación utilizadas en la CRDDC2022 y en Ultralytics, que son las métricas de evaluación que se han utilizado en los experimentos realizados en este TFG.
+Las métricas de evaluación son una parte fundamental en el desarrollo de modelos de visión por computador. Permiten cuantificar el rendimiento de los modelos y comparar diferentes modelos entre sí. En este TFG se han utilizado varias métricas de evaluación para evaluar los modelos de detección de daños en pavimentos. A continuación, se detallan las métricas de evaluación utilizadas en la CRDDC2022 y en Ultralytics, que son las métricas de evaluación que se han utilizado en los experimentos realizados en este TFG.
 
-\subsection{Métricas de evaluación de la CRDDC 2022}
+\subsubsection{Métricas de evaluación de la CRDDC 2022}
 La CRDDC2022 proporciona una métrica de evaluación que se utiliza en los cinco leaderboards que han publicado. La CRDDC2022 solo evalúa cinco predicciones por imagen y el resto las ignora. Los modelos se evalúan con F-measure o F1-score. El F1-score se calcula como la media armónica de la precisión y el recall, es decir,
 \begin{equation}
     \text{F1} = \frac{2 \cdot Precision \cdot Recall}{Precision + Recall}
@@ -15,12 +15,12 @@ Una predicción se considera correcta si el IoU (Intersección sobre Unión) ent
 % Añadimos el diagrama de IoU
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{img/IoU-diagram.png}
+    \includegraphics[width=0.4\textwidth]{img/IoU-diagram.png}
     \caption{Diagrama de IoU.}
     \label{fig:IoU}
 \end{figure}
 
-\subsection{Métricas de evaluación de Ultralytics\label{SEC:METRICAS_ULTRALYTICS}}
+\subsubsection{Métricas de evaluación de Ultralytics\label{SEC:METRICAS_ULTRALYTICS}}
 La librería Ultralytics proporciona varias métricas y gráficas que se utilizan para evaluar los modelos de detección de objetos y monitorizar el entrenamiento. Las métricas de evaluación que proporciona Ultralytics son las siguientes:
 \begin{itemize}
     \item \textbf{Precision}: La precisión se calcula como el número de verdaderos positivos dividido por el número de verdaderos positivos más falsos positivos.
@@ -30,7 +30,7 @@ La librería Ultralytics proporciona varias métricas y gráficas que se utiliza
     \item \textbf{F1-score}: Ultralytics no proporciona el F1-score directamente, pero se puede calcular a partir de la precisión y el recall como se ha explicado anteriormente.
 \end{itemize}
 
-Las gráficas que proporciona Ultralytics son las siguientes:
+Las gráficas que proporciona Ultralytics son las siguientes (ver figura \ref{fig:Ultralytics_metrics}):
 
 \begin{itemize}
     \item \textbf{Loss curve}: La curva de pérdida muestra la evolución de la pérdida durante el entrenamiento. Permite monitorizar el entrenamiento y detectar posibles problemas como overfitting.
@@ -40,12 +40,10 @@ Las gráficas que proporciona Ultralytics son las siguientes:
     \item \textbf{Ejemplos de batch}: Muestra ejemplos de imágenes con las predicciones del modelo. Permite visualizar las predicciones del modelo y compararlas con el ground truth.
 \end{itemize}
 
-En la figura \ref{fig:Ultralytics_metrics} se muestran ejemplos de las gráficas que proporciona Ultralytics.
-
 % Añadimos ejemplos de las gráficas de Ultralytics. Tengo metrics_confusion_matrix.png, metrics_PR_curve.png, metrics_results.png y metrics_val_batch0_pred.png. metrics_grid.jpg es una imagen que he creado para mostrar todas las gráficas juntas.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{graphs/metrics_grid.jpg}
+    \includegraphics[width=0.9\textwidth]{graphs/metrics_grid.jpg}
     \caption{Ejemplos de gráficas de Ultralytics. De izquierda a derecha y de arriba a abajo: matriz de confusión, curva precision-recall, resultados de la evaluación y ejemplos de batch.}
     \label{fig:Ultralytics_metrics}
 \end{figure}

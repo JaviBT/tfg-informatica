@@ -3,11 +3,33 @@ Una vez se ha implementado el modelo, se procede a realizar pruebas para verific
 El formato de las predicciones que se envían a la plataforma de evaluación de la CRDDC 2022 es un archivo CSV que contiene las coordenadas de las cajas delimitadoras de los objetos detectados en las imágenes. Cada fila del archivo corresponde con una imagen y contiene la información de las cajas delimitadoras de los objetos detectados en la imagen. El formato de cada caja delimitadora es el siguiente:
 
 \begin{center}
-    \texttt{image\_name, label x\_min y\_min x\_max y\_max}
+    \texttt{\(image\_id\), \(label_{1}\) \(x_{min, 1}\) \(y_{min, 1}\) \(x_{max, 1}\) \(y_{max, 1}\) \(label_{2}\) \(x_{min, 2}\) \(y_{min, 2}\) \(x_{max, 2}\) \(y_{max, 2}\) \dots}
 \end{center}
 
-Cada fila puede contener varias cajas delimitadoras, una por cada objeto detectado en la imagen. No obstante, solo se evalúan las 5 primeras cajas delimitadoras de cada imagen y se ignoran las restantes. Es por ello, que a la hora de generar el fichero de predicciones, es recomendable ordenar las cajas delimitadoras de mayor a menor confianza. Siendo la confianza un valor generado por el modelo que indica la probabilidad, entre 0 y 1, de que la caja delimitadora contenga un objeto de la clase correspondiente. Otro detalle importante es que las coordenadas deben estar en valor absoluto y no normalizadas. Por lo que es necesario pasar los valores normalizados generados por los modelos YOLO a valores absolutos.
+Cada fila puede contener varias cajas delimitadoras, una por cada objeto detectado en la imagen. No obstante, solo se evalúan las 5 primeras cajas delimitadoras de cada imagen y se ignoran las restantes. Es por ello, que a la hora de generar el fichero de predicciones, es recomendable ordenar las cajas delimitadoras de mayor a menor confianza. Siendo la confianza un valor generado por el modelo que indica la probabilidad, entre 0 y 1, de que la caja delimitadora contenga un objeto de la clase correspondiente. Otro detalle importante es que las coordenadas deben estar en valor absoluto y no normalizadas. Por lo que es necesario pasar los valores normalizados generados por los modelos YOLO a valores absolutos. Esto se puede hacer multiplicando las coordenadas normalizadas por el ancho y alto de la imagen.
 
-Una vez se han generado las predicciones, se procede a enviarlas a la plataforma de evaluación de la CRDDC 2022. La competición tiene cinco tablas de clasificación diferentes, una general para los seis países, y otras cuatro para India, Japón, Noruega y Estados Unidos por separados. También hay una tabla de clasificación de resumen que muestras los resultados de cada participante en cada tabla de clasificación e incluye una columna de puntuación media entre todas las tablas de clasificación. Una vez se han enviado las predicciones, la plataforma calcula el f1-score y ordena a los participantes en función de este valor. Se considera que el mejor equipo es aquel que obtiene la mayor puntuación media entre todas las tablas de clasificación.
+Una vez se han generado las predicciones, se procede a enviarlas a la plataforma de evaluación de la CRDDC 2022. La competición tiene cinco tablas de clasificación diferentes, una general para los seis países, y otras cuatro para India, Japón, Noruega y Estados Unidos por separados. También hay una tabla de clasificación de resumen que muestras los resultados de cada participante en cada tabla de clasificación e incluye una columna de puntuación media entre todas las tablas de clasificación. La tabla \ref{tab:competition_scores} muestra el resumen de resultados de los mejores equipos. Una vez se han enviado las predicciones, la plataforma calcula el f1-score y ordena a los participantes en función de este valor. Se considera que el mejor equipo es aquel que obtiene la mayor puntuación media entre todas las tablas de clasificación.
 
-Una observación importante es que una táctica común en competiciones como esta es crear modelos específicos para cada tabla de clasificación. Estos modelos pueden estar sobreajustados a dicha tabla de clasificación, lo que les permite obtener una mayor puntuación y mejorar la puntuación media general. Adicionalmente, se podría anotar manualmente las imágenes de test y usarlas para entrenar un modelo que esté sobreajustado a estas imágenes, logrando así mejores puntuaciones. Sin embargo, aunque esta estrategia puede mejorar la puntuación en la competición, no es una buena práctica para crear un modelo base que generalice bien y sea capaz de detectar daños en pavimentos en una amplia variedad de situaciones. Además, entrenar múltiples modelos para cada tabla de clasificación puede ser costoso en términos de tiempo y recursos.
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{|c|l|r|r|r|r|r|r|}
+    \hline
+    \textbf{Rank} & \textbf{Team ID} & \textbf{LeaderBoard1 Score} & \textbf{LeaderBoard2 Score} & \textbf{LeaderBoard3 Score} & \textbf{LeaderBoard4 Score} & \textbf{LeaderBoard5 Score} & \textbf{Average Score} \\ \hline
+    1  & T22\_043\_maybe\_he                  & 0.769916 & 0.583013 & 0.789173 & 0.594530 & 0.844316 & 0.716190 \\ \hline
+    2  & T22\_032\_Dongjun\_Jeong             & 0.743233 & 0.539953 & 0.749614 & 0.538411 & 0.800815 & 0.674405 \\ \hline
+    3  & T22\_030\_SH\_S\_U                   & 0.741131 & 0.516477 & 0.735067 & 0.503674 & 0.817006 & 0.662671 \\ \hline
+    4  & T22\_035\_Shouxing\_Wang             & 0.727401 & 0.544689 & 0.726542 & 0.480894 & 0.779325 & 0.651770 \\ \hline
+    5  & T22\_018\_Ammar\_Mohammed\_Almasrwhi & 0.726007 & 0.517736 & 0.734582 & 0.498392 & 0.788858 & 0.651115 \\ \hline
+    6  & T22\_022\_Seon\_Ho\_Kim              & 0.727640 & 0.542165 & 0.725027 & 0.477738 & 0.774427 & 0.649399 \\ \hline
+    7  & T22\_034\_han\_shi\_hao              & 0.718330 & 0.559149 & 0.719599 & 0.457609 & 0.743063 & 0.639550 \\ \hline
+    8  & T22\_029\_hualin\_he                 & 0.694337 & 0.519195 & 0.773003 & 0.464404 & 0.726855 & 0.635559 \\ \hline
+    9  & T22\_024\_yi\_lia\_lia               & 0.695437 & 0.501949 & 0.785837 & 0.455956 & 0.732927 & 0.634421 \\ \hline
+    10 & T22\_014\_Poonam\_Kumari\_Saha       & 0.697423 & 0.493679 & 0.715857 & 0.461847 & 0.775131 & 0.628788 \\ \hline
+    \end{tabular}
+    }
+    \caption{Tabla de clasificación de resumen de la CRDDC 2022. Se muestran los 10 primeros equipos en el momento de cierre de la competición. \cite{Leaderboard_CRDDC2022}}
+    \label{tab:competition_scores}
+\end{table}
+
+Una observación importante es que una táctica común en competiciones como esta es crear modelos específicos para cada tabla de clasificación. Estos modelos pueden estar sobreajustados a dicha tabla de clasificación, lo que les permite obtener una mayor puntuación y mejorar la puntuación media general. Otra táctica en competiciones es anotar manualmente las imágenes de prueba y usarlas para entrenar un modelo que esté sobreajustado a estas imágenes, logrando así mejores puntuaciones. Sin embargo, aunque esta estrategia puede mejorar la puntuación en la competición, no es una buena práctica para crear un modelo base que generalice bien y sea capaz de detectar daños en pavimentos en una amplia variedad de situaciones. Además, entrenar múltiples modelos para cada tabla de clasificación puede ser costoso en términos de tiempo y recursos.
