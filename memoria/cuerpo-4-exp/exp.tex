@@ -9,7 +9,7 @@ Este capítulo se centra en los experimentos realizados durante el desarrollo de
 
 El primer experimento relevante que se ha realizado en este TFG ha sido el entrenamiento de un modelo YOLOv8 con los datos de Estados Unidos de la CRDDC2022 y la validación cruzada de 4 \textit{folds}. En total se han realizado 4 iteraciones, una por cada \textit{fold}, y se han obtenido métricas de evaluación para cada iteración. El entrenamiento se ha llevado a cabo en Google Colab con una GPU Tesla T4 y ha durado aproximadamente 1 hora y 40 minutos por iteración. A continuación se detallan los pasos seguidos, los resultados obtenidos y las conclusiones extraídas.
 
-Se ha optado por entrenar solo con los datos de Estados Unidos porque como se puede ver en la tabla \ref{tab:dataset_info}, es una región con una cantidad moderada de imágenes pero con una gran cantidad de anotaciones. Por lo tanto, se considera que es una región adecuada para entrenar un primer modelo y probar la metodología de validación cruzada propuesta. Además, se ha utilizado un modelo YOLOv8 de tamaño \textit{small} y pre entrenado con el conjunto de datos, COCO ('yolov8s.pt'). Se ha utilizado un tamaño de batch de 50 durante 60 épocas para cada iteración. Estos hiperparámetros se han elegido para ajustarse a las limitaciones de memoria de la GPU Tesla T4 de Google Colab y para que el entrenamiento no dure demasiado tiempo. 
+Se ha optado por entrenar solo con los datos de Estados Unidos porque como se puede ver en la tabla \ref{tab:dataset_info}, es una región con una cantidad moderada de imágenes pero con una gran cantidad de anotaciones. Por lo tanto, se considera que es una región adecuada para entrenar un primer modelo y probar la metodología de validación cruzada propuesta. Además, se ha utilizado un modelo YOLOv8 de tamaño \textit{small} y pre entrenado con el conjunto de datos, COCO ('yolov8s.pt'). Se ha utilizado un tamaño de batch de 50 durante 60 épocas para cada iteración. Estos hiperparámetros se han elegido para ajustarse a las limitaciones de memoria de la GPU Tesla T4 de Google Colab y para que el entrenamiento no dure demasiado tiempo.
 
 El objetivo de este experimento es comprobar si la metodología de validación cruzada propuesta es adecuada para evaluar los modelos, ver cuanto podemos aproximarnos a los resultados de la CRDDC2022. Para este primer experimento se ha usado un tamaño de modelo \textit{small} y un subconjunto pequeño de datos para poder iterar rápidamente y extraer conclusiones que se puedan aplicar a futuros modelos más costosos en tiempo y recursos.
 
@@ -35,20 +35,22 @@ Adicionalmente, se han realizado predicciones para las imágenes de test de Esta
 % Resultados para Estados Unidos en el momento del cierre de la competición
 \begin{table}[H]
     \centering
-    \begin{tabular}{|c|l|r|}
-    \hline
-    \textbf{Rank} & \textbf{Team ID} & \textbf{F1-Score} \\ \hline
-    1  & T22\_043\_maybe\_he                  & 0.8443163877126995 \\ \hline
-    2  & T22\_030\_SH\_S\_U                   & 0.8170061339986036 \\ \hline
-    3  & T22\_032\_Dongjun\_Jeong             & 0.8008152493212433 \\ \hline
-    4  & T22\_035\_Shouxing\_Wang             & 0.7793253573066574 \\ \hline
-    5  & T22\_018\_Ammar\_Mohammed\_Almasrwhi & 0.7788579921283062 \\ \hline
-    6  & T22\_014\_Poonam\_Kumari\_Saha       & 0.7751306857212417 \\ \hline
-    7  & T22\_022\_Seon\_Ho\_Kim              & 0.7744267351552836 \\ \hline
-    8  & T22\_034\_han\_shi\_hao              & 0.743062760430727  \\ \hline
-    9  & T22\_024\_yi\_lia\_lia               & 0.7329269630149433 \\ \hline
-    10 & T22\_029\_hualin\_he                 & 0.7268546786507959 \\ \hline
-    \end{tabular}
+    \resizebox{0,6\textwidth}{!}{
+        \begin{tabular}{|c|l|r|}
+        \hline
+        \textbf{Rank} & \textbf{Team ID} & \textbf{F1-Score} \\ \hline
+        1  & T22\_043\_maybe\_he                  & 0.8443163877126995 \\ \hline
+        2  & T22\_030\_SH\_S\_U                   & 0.8170061339986036 \\ \hline
+        3  & T22\_032\_Dongjun\_Jeong             & 0.8008152493212433 \\ \hline
+        4  & T22\_035\_Shouxing\_Wang             & 0.7793253573066574 \\ \hline
+        5  & T22\_018\_Ammar\_Mohammed\_Almasrwhi & 0.7788579921283062 \\ \hline
+        6  & T22\_014\_Poonam\_Kumari\_Saha       & 0.7751306857212417 \\ \hline
+        7  & T22\_022\_Seon\_Ho\_Kim              & 0.7744267351552836 \\ \hline
+        8  & T22\_034\_han\_shi\_hao              & 0.743062760430727  \\ \hline
+        9  & T22\_024\_yi\_lia\_lia               & 0.7329269630149433 \\ \hline
+        10 & T22\_029\_hualin\_he                 & 0.7268546786507959 \\ \hline
+        \end{tabular}
+    }
     \caption{F1-scores para los 10 primeros equipos en la plataforma de la CRDDC2022 para los datos de test de Estados Unidos en el momento del cierre de la competición.}
     \label{tab:top10_f1_scores}
 \end{table}
@@ -111,3 +113,26 @@ En este experimento, se ha entrenado un modelo YOLOv8 de tamaño \textit{very la
 
 Debido al tamaño del modelo \textit{very large}, el mayor tamaño de batch soportado por las Tesla T4 de Google Colab era 16. Con 28784 imágenes de entrenamiento y 9601 de validación, el tamaño de batch de 16 resultaba en 1799 iteraciones de entrenamiento y 601 de validación por época. Ejecutando este proceso en Google Colab con una Tesla T4, cada época duraba aproximadamente 43 minutos. Esto significa que un entrenamiento de 60 épocas duraba aproximadamente 43 horas. Por lo tanto, no era razonable realizar una validación cruzada simplemente para garantizar una ligera mejora en la generalización del modelo.
 
+Los pesos de los modelos entrenados en Google Colabs se han descarcago y se ha realizado la inferencia en local sobre los distintos conjuntos de datos que componen la CRDDC2022. Los resultados obtenidos en la plataforma de la CRDDC2022 se pueden ver en la tabla \ref{tab:exp3_results}.
+
+\begin{table}[H]
+    \centering
+    \resizebox{0,4\textwidth}{!}{
+        \begin{tabular}{|l|r|}
+        \hline
+        \textbf{Conjunto de Datos} & \textbf{F1-Score} \\ \hline
+        Todos           &    SIN TERMINAR\\ \hline
+        India           &    SIN TERMINAR\\ \hline
+        Japón           & 0.5946284828735682    \\ \hline
+        Noruega         & 0.3097122625784419    \\ \hline
+        Estados Unidos  & 0.6412266602062118    \\ \hline
+        \end{tabular}
+    }
+    \caption{F1-scores obtenidos en la plataforma de la CRDDC2022 para los distintos conjuntos de datos.}
+    \label{tab:exp3_results}
+\end{table}
+
+SIN TERMINAR
+SIN TERMINAR
+SIN TERMINAR
+SIN TERMINAR

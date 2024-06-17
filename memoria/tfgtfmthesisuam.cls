@@ -235,6 +235,7 @@
 % Paquetes adicionales añadidos por Fco Javier Barranco
 \usepackage{graphicx}
 \usepackage{rotating}
+\usepackage{rotfloat}
 \usepackage{subcaption}
 \usepackage{subfigure}
 

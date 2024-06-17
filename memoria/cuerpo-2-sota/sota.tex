@@ -37,7 +37,7 @@ La arquitectura de YOLOv8 aún no cuenta con un artículo publicado, por lo que 
 La arquitectura de YOLOv8 se divide en dos componentes principales: el Backbone y el Head. El Backbone extrae características de las imágenes de entrada mediante convoluciones y otras operaciones. El Head fusiona estas características y realiza las predicciones finales de detección de objetos, clasificación y segmentación. A veces, el Head se subdivide en dos partes: el Neck, que fusiona las características extraídas por el Backbone, y el Head, que realiza las predicciones. En la figura \ref{fig:YOLOv8_architecture}, el Neck corresponde a todo lo marcado como Head, excepto los bloques de Detect, que constituyen el verdadero Head. La figura \ref{fig:YOLOv8_architecture_neck_head} muestra una visualización alternativa de la arquitectura de YOLOv8 con el Neck y el Head separados.
 
 % Añadimos la figura con la arquitectura de YOLOv8 creada por RangeKing
-\begin{figure}[H]
+\begin{figure}
     \centering
     \includegraphics[width=1\textwidth]{../img/yolov8-arq.png}
     \caption{Arquitectura de YOLOv8, visualización realizada por el usuario de GitHub RangeKing\cite{RangeKing_GitHub}.}
