@@ -1,4 +1,4 @@
-En esta sección se va a explicar cómo se ha entrenado el modelo de detección de estado del pavimento. Comenzaremos explicando los parámetros de entrenamiento y otras consideraciones que se deben tener en cuenta a la hora de entrenar un modelo de detección de objetos. Después, se explicará cómo se han preparado los datos de la CRDDC2022 para tener en cuenta estas consideraciones y adaptar los datos a las particularidades de la librería Ultralytics. Por último, se explicará los requerimientos de hardware necesarios para entrenar los modelos de detección de objetos y cómo se ha llevado a cabo el entrenamiento en Google Colab y en VPULab durante el desarrollo de este TFG.
+En esta sección se va a explicar cómo se ha entrenado el modelo de detección de estado del pavimento. Comenzaremos explicando los parámetros de entrenamiento y otras consideraciones que se deben tener en cuenta a la hora de entrenar un modelo de detección de objetos. Después, se explicará cómo se han preparado los datos de la CRDDC2022 para tener en cuenta estas consideraciones y adaptar los datos a las particularidades de la librería Ultralytics. Por último, se explicará los requerimientos de hardware necesarios para entrenar los modelos de detección de objetos y cómo se ha llevado a cabo el entrenamiento en Google Colab durante el desarrollo de este TFG.
 
 \subsection{Parámetros de entrenamiento y otras consideraciones}
 Al entrenar modelos de aprendizaje profundo, se busca lograr una buena generalización, altas puntuaciones de precisión y recall, así como un entrenamiento rápido y eficiente. Para lograr estos objetivos se debe escoger cuidadosamente los parámetros de entrenamiento y tener en cuenta otras consideraciones clave.
@@ -11,7 +11,7 @@ YOLOv8 tiene varios tamaños de modelo que se pueden usar. Los tamaños disponib
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{graphs/yolo-comparison-plots.png}
-    \caption{Comparación de los tamaños de los modelos YOLOv8 de Ultralytics.}
+    \caption{Comparación de los tamaños de los modelos YOLOv8 de Ultralytics. Figura extraída de \cite{ultralytics_yolov8_docs}.}
     \label{fig:yolo-comparison-plots}
 \end{figure}
 
