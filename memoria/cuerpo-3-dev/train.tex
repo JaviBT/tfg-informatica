@@ -31,6 +31,15 @@ En la figura \ref{fig:example_results} se muestra un ejemplo de los resultados d
     \label{fig:example_results}
 \end{figure}
 
+Como hemos visto en la figura \ref{fig:images_per_dataset_per_region}, la distribución de imágenes por región es muy desigual. Dependiendo de cómo se seleccione el conjunto de entrenamiento, esta diferencia en el número de imágenes por región puede afectar al rendimiento del modelo de diferentes maneras. Las tres estrategias más comunes son el \textit{undersampling}, \textit{oversampling} y no hacer nada.
+
+El \textit{undersampling} consiste en seleccionar un número igual de imágenes de cada región, generalmente seleccionando tantas imágenes de cada región como la región con menos imágenes. El riesgo de esta técnica es que se pierde información de entrenamiento que podría ser útil para mejorar el modelo. Por otro lado, el \textit{oversampling} implica seleccionar múltiples veces las imágenes de los conjuntos con menos imágenes hasta tener tantas imágenes como el conjunto que más imágenes tiene. El riesgo de esta técnica es que puede llevar al sobreajuste a aquellas imágenes repetidas y además incrementa el tiempo de entrenamiento sin añadir información nueva. Sin embargo, tanto el \textit{undersampling} como el \textit{oversampling} solventan el problema de sobreajuste a las regiones con más imágenes.
+
+La tercera estrategia es no hacer nada, lo que lleva a que el modelo se sobreajuste a las regiones con más imágenes. En este TFG se ha optado por esta tercera estrategia, ya que el \textit{undersampling} conllevaría una pérdida de información demasiado grande y el \textit{oversampling} aumentaría considerablemente el tiempo de ejecución, que ya es la limitación más grande en este TFG.
+
+Una posible línea de trabajo futuro sería investigar si se puede mejorar el ajuste a los conjuntos de datos con menos imágenes mediante técnicas de \textit{data augmentation}, \textit{fine tuning} o incrementando el número de imágenes en estas regiones, por ejemplo, mediante Google Earth.
+
+
 \subsection{Preparación de los datos}
 En la sección de modelos [Sección \ref{SEC:MODELOS}] se ha explicado cómo se ha usado YOLO de Ultralytics para la detección del estado del pavimento. La elección de dicha librería nos obliga a realizar una serie de transformaciones en los datos para poder entrenar nuestros modelos. En esta subsección se va a explicar cómo se han preparado los datos de la CRDDC2022 para poder ser usados con YOLO de Ultralytics. Estos cambios se pueden encontrar detallados en los notebooks 'prepare-DatasetNinja.ipynb' y 'dataToYoloFormat.ipynb' en el repositorio del TFG \cite{TFG_Repository}.
 
