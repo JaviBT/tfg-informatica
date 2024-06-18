@@ -1,6 +1,37 @@
-Esta capítulo presenta las conclusiones del trabajo realizado y propone algunas líneas de trabajo futuro.
+% Autor: Francisco Javier Barranco Tena
+% Conclusiones y trabajo futuro
+% Alt + z o Option + z para activar el word wrap en Visual Studio Code
 
 \section{Conclusiones\label{SEC:CONC}}
+El objetivo de este TFG era implementar un sistema base basado en YOLOv8 que pudiera ser utilizado en el futuro paara la detección de daños en el pavimento. El resultado ha sido un modelo que obtiene un F1-score de \textbf{0.597} y que es capaz de procesar \textbf{X} imágenes por segundo, sobre el conjunto de datos de la CRDDC2022. Además, hemos podido comprobar que existe mucho margen de mejora creando \textit{ensembles} basados en nuestro modelo y aplicando técnicas como \textit{data augmentation}, \textit{transfer learning} o post-procesado de las detecciones.
+
+Durante el desarrollo de este TFG, la mayor limitación ha sido la capacidad de cómputo requerida. Aunque se ha utilizado una GPU NVIDIA Tesla T4, el entrenamiento de los modelos ha sido lento, y en el caso del sistema base final ha tardado aproximadamente \textbf{X} horas. Esto ha supuesto una limitación a la hora de iterar sobre los experimentos que se iban realizando y también a la hora de poder competir con los participantes de la CRDDC2022. Hemos visto que una de las claves para obtener los mejores resultados es la utilización de \textit{ensembles} de modelos, lo que requiere entrar múltiples modelos. Esto es complicado cuando la capacidad de cómputo es una limitación.
 
 
 \section{Trabajo futuro\label{SEC:TRABFUT}}
+A partir de los resultados obtenidos en este TFG, se pueden abrir varias líneas de trabajo futuro. Algunas enfocadas en seguir mejorando dentro del marco de evaluación de la CRDDC2022 y otras en explorar nuevas aplicaciones de tecnologías de la información en el contexto de la seguridad vial. A continuación, se presentan algunas de estas líneas de trabajo futuro:
+
+Para seguir mejorando el rendimiento del modelo dentro del marco de evaluación de la CRDDC2022, se podrían explorar las siguientes líneas de trabajo:
+
+\begin{itemize}
+    \item \textbf{\textit{Ensembles}}: La característica principal de las soluciones ganadoras es el uso de \textit{ensembles} de modelos. Por ello, una línea de trabajo interesante sería explorar la creación de \textit{ensembles} basados en el modelo base desarrollado en este TFG.
+    \item \textbf{\textit{Fine-tuning}}: El modelo base obtenido en este TFG contiene información valiosa que podría ser aprovechada en modelos futuros mediante técnicas de \textit{fine-tuning}. Esto consiste en entrenar nuevos modelos partiendo del modelo base y ajustándolos específicamente a una de las regiones o tipos de daños en el pavimento.
+    \item \textbf{\textit{Data augmentation}}: Durante los experimentos realizados se ha comprobado que el aumento del número de imágenes de entrenamiento puede mejorar el rendimiento del modelo. Por ello, una línea de trabajo interesante sería explorar técnicas de \textit{data augmentation} que permitan generar más datos a partir de los datos existentes. También se podría explorar la posibilidad de incluir nuevos conjuntos de datos, como imágenes extraídas de Google Earth y anotadas a mano, o conjuntos de datos existentes de daños en el pavimento que no fueron incluidos en la CRDDC2022.
+    \item \textbf{Post-procesado de detecciones}: Uno de los problemas principales problemas de los modelos entrenados es que producían muchos falsos positivos. Una de las causas identificadas de este problema es que los modelos tienden a crear múltiples cajas delimitadoras pequeñas para algo que en el \textit{ground truth} aparece como un solo objeto más grande. Por ello, una línea de trabajo interesante sería explorar técnicas de post-procesado de detecciones que permitan unir estas cajas delimitadoras pequeñas en una sola caja delimitadora más grande.
+\end{itemize}
+
+Adicionalmente, durante el desarrollo de este TFG se ha anunciado la siguiente edición del RDDC (\textit{Road Damage Detection Challenge}) que se llama ORDDC 2024 (\textit{Optimized Road Damage Detection Challenge}) \cite{ORDDC2024}. Puede ser interesante participar en este nuevo desafío partiendo de los resultados obtenidos en este TFG. Esta nueva edición aborda el problema de automatizar la detección de daños en carreteras, enfocándose en la optimización de la velocidad de inferencia y el uso de recursos. Hasta ahora, los desafíos de RDD han priorizado mejorar el rendimiento de los modelos de detección de daños en carreteras, utilizando el F1-score como la métrica principal (y única). Sin embargo, a medida que avanzamos, se ha vuelto cada vez más crucial abordar las preocupaciones sobre la optimización de recursos, especialmente en cuanto a la velocidad de inferencia y el uso de memoria, para permitir el despliegue en tiempo real de estos modelos. Por lo tanto, el criterio principal del nuevo desafío se desplaza hacia la optimización del uso de recursos.
+
+Para explorar nuevas aplicaciones de tecnologías de la información en el contexto de la seguridad vial, se podrían considerar las siguientes líneas de trabajo:
+
+\begin{itemize}
+    \item \textbf{Productivización del modelo entrenado}: Se trata de desarrollar un sistema más avanzado que combine hardware y software para su uso en entornos reales. Este sistema permitiría que un vehículo equipado con cámaras y un sistema de procesamiento pudiera detectar daños en el pavimento, clasificarlos y reportarlos con posición GPS a una central de control encargada de gestionar las reparaciones. Esta línea de trabajo incluiría:
+    \begin{itemize}
+        \item La creación de un hardware que se pueda instalar en vehículos.
+        \item El desarrollo de una infraestructura de IoT\footnote{Internet of Things, en español, Internet de las Cosas es una red de dispositivos físicos interconectados que pueden recopilar e intercambiar datos.} para la comunicación entre los vehículos y la central de control.
+        \item La creación de una aplicación que gestione la información recibida y la muestre a los operarios de mantenimiento de carreteras.
+    \end{itemize}
+    Además, en un entorno productivo, se deben considerar otros aspectos como la protección de datos, la seguridad de la información y la escalabilidad del sistema. Esto abre nuevas líneas de trabajo, como la necesidad de ofuscar matrículas, caras y otros datos sensibles en las imágenes capturadas por el sistema, proteger la comunicación entre los vehículos y la central de control, y diseñar un sistema que pueda escalar a nivel nacional o internacional.
+    
+    \item \textbf{Exploración de otras tareas de YOLOv8}: Tras el éxito de YOLOv8 en la detección de daños en el pavimento, otra posible línea de trabajo sería explorar si las otras capacidades de YOLOv8, como la segmentación de objetos, el seguimiento de objetos, la detección de poses y la clasificación de imágenes, pueden ser útiles en el contexto de la seguridad vial.
+\end{itemize}

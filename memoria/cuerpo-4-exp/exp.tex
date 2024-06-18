@@ -109,18 +109,18 @@ Se ha intentado aplicar esta conclusión para mejorar el F1-score del experiment
 
 \section{Experimento 3: Entrenamiento con todos los conjuntos de datos y validación simple}\label{SEC:EXP3}
 
-En este experimento, se ha entrenado un modelo YOLOv8 de tamaño \textit{very large} con todos los conjuntos de datos de la CRDDC2022. Se ha realizado una validación simple utilizando el 75\% de los datos para entrenamiento y el 25\% para validación, sin utilizar validación cruzada debido a la alta demanda computacional de este experimento.
+En este experimento, se ha entrenado un modelo YOLOv8 de tamaño \textit{very large} con todos los conjuntos de datos de la CRDDC2022. Se ha realizado una validación simple utilizando el 75\% de los datos para entrenamiento y el 25\% para validación (\textit{fold\_0}), sin utilizar validación cruzada debido a la alta demanda computacional de este experimento.
 
-Debido al tamaño del modelo \textit{very large}, el mayor tamaño de batch soportado por las Tesla T4 de Google Colab era 16. Con 28784 imágenes de entrenamiento y 9601 de validación, el tamaño de batch de 16 resultaba en 1799 iteraciones de entrenamiento y 601 de validación por época. Ejecutando este proceso en Google Colab con una Tesla T4, cada época duraba aproximadamente 43 minutos. Esto significa que un entrenamiento de 60 épocas duraba aproximadamente 43 horas. Por lo tanto, no era razonable realizar una validación cruzada simplemente para garantizar una ligera mejora en la generalización del modelo.
+Debido al tamaño del modelo \textit{very large}, el mayor tamaño de batch soportado por las Tesla T4 de Google Colab era 16. Con 28784 imágenes de entrenamiento y 9601 de validación, el tamaño de batch de 16 resultaba en 1799 iteraciones de entrenamiento y 601 de validación por época. Ejecutando este proceso en Google Colab con una Tesla T4, cada época duraba aproximadamente 43 minutos. El entrenamiento se ha realizado durante 90 épocas, lo que ha supuesto aproximadamente 65 horas de entrenamiento. Por lo tanto, no era razonable realizar una validación cruzada simplemente para garantizar una ligera mejora en la generalización del modelo.
 
 Los pesos de los modelos entrenados en Google Colabs se han descargado y se ha realizado la inferencia en local sobre los distintos conjuntos de datos que componen la CRDDC2022. Los resultados obtenidos en la plataforma de la CRDDC2022 se pueden ver en la tabla \ref{tab:exp3_results}.
 
 \begin{table}[H]
     \centering
-    \resizebox{0,4\textwidth}{!}{
+    \resizebox{0,45\textwidth}{!}{
         \begin{tabular}{|l|r|}
         \hline
-        \textbf{Conjunto de Datos} & \textbf{F1-Score} \\ \hline
+        \textbf{\textit{Leaderboard}} & \textbf{F1-Score} \\ \hline
         Todos           & 0.596914344950027     \\ \hline
         India           & 0.37469955667942845   \\ \hline
         Japón           & 0.5946284828735682    \\ \hline
@@ -132,7 +132,20 @@ Los pesos de los modelos entrenados en Google Colabs se han descargado y se ha r
     \label{tab:exp3_results}
 \end{table}
 
-SIN TERMINAR
-SIN TERMINAR
-SIN TERMINAR
-SIN TERMINAR
+En el anexo \ref{CAP:LEADERBOARD} se presentan los resultados de los 15 mejores equipos para cada \textit{leaderboard} de la CRDDC2022 al cierre de la competición. Al comparar los resultados de este experimento con los de los mejores equipos de la CRDDC2022, se observa que el modelo entrenado se encuentra ligeramente por debajo del top 15 y lejos de los primeros puestos. Por ejemplo, en el \textit{leaderboard} de todos los datos, el modelo entrenado obtiene un F1-score de \textbf{0.597}, mientras que los 15 mejores equipos obtuvieron entre 0.605 y 0.770. Es decir, aunque el modelo entrenado casi entra en el top 15, queda muy lejos del primer puesto.
+
+Es importante recordar que en este trabajo se ha utilizado YOLOv8 en lugar de YOLOv7 y YOLOv5, que eran las versiones disponibles durante la CRDDC2022, ya que YOLOv8 aún no existía en ese momento. Sin embargo, la mayoría de los equipos participantes emplearon \textit{ensembles} de varios modelos y otras técnicas avanzadas que les permitieron obtener mejores puntuaciones, incluso utilizando una versión anterior de YOLO. Esto sugiere que nuestro sistema base tiene un amplio margen de mejora si se aplican técnicas similares, especialmente \textit{ensembles} de modelos. El objetivo de este TFG era desarrollar un sistema base basado en YOLOv8, al que posteriormente se le puedan aplicar algunas de estas técnicas. En la sección \ref{SEC:TRABFUT} se proponen algunas líneas de trabajo futuro para mejorar el rendimiento del modelo.
+
+A continuación, analizaremos los resultados obtenidos en la plataforma (ver tabla \ref{tab:exp3_results}) junto con resultado de la validación sobre el \textit{fold\_0} para entender mejor las limitaciones del modelo y posibles áreas de mejora.
+
+En los \textit{leaderboards} de India y Noruega se han obtenido resultados significativamente peores que en los otros conjuntos de datos. Esto no es un problema exclusivo de nuestro modelo, ya que los participantes de la CRDDC2022 también lo han experimentado. No obstante, esto indica que estos conjuntos de datos presentan dificultades adicionales que deben tenerse en cuenta. En el caso de India, la calidad de las imágenes es la más baja de todos los conjuntos de datos (ver figura \ref{fig:example_images_region}), y la distribución de los tipos de daño es muy diferente, con una proporción significativamente alta de grietas de cocodrilo y baches (ver tabla \ref{tab:anotaciones_por_clase_region}). Es probable que los modelos, al entrenar con todos los datos, tiendan a sobreajustarse en favor de las grietas longitudinales y transversales, que son más comunes, y en el caso de India, confundan las grietas de cocodrilo con mezclas de grietas longitudinales y transversales. En el caso de Noruega, las imágenes tienen una resolución muy alta y el pavimento suele ocupar un porcentaje pequeño de la imagen (ver figura \ref{fig:example_images_region}). Estos dos factores hacen que, al redimensionar las imágenes durante el entrenamiento, el número de píxeles dedicados al pavimento sea muy pequeño, impidiendo así la detección de daños pequeños. En la figura \ref{fig:CRDDC2022_detailed_solutions} se puede ver que una de las características de la solución del tercer equipo, MDPT, fue recortar las imágenes de Noruega para centrarse en el pavimento, esto es algo que se podría probar. Las particularidades de estos dos conjuntos de datos podrían ser capturadas por un \textit{ensemble} de modelos que incluyan modelos específicamente entrenados teniendo en cuenta estas particularidades.
+
+En la figura \ref{fig:exp3-val0-all-confusion_matrix_normalized} se puede ver la matriz de confusión normalizada del modelo entrenado en el experimento 3 sobre todos los datos de validación. Se observa que el modelo genera muchos falsos positivos especialmente de grietas longitudinales. Como se comentó en experimentos anteriores muchas de estas predicciones son correctas, pero no aparecen en el \textit{ground truth}. De cara a obtener un mejor F1-score en la competición se deberían de buscar soluciones a este problema como algoritmos de post-procesado que puedan descartar o fusionar predicciones para adaptarse mejor al \textit{ground truth}. Por otro lado, al igual que en experimentos anteriores, los baches son el tipo de daño que peor detecta el modelo, esto puede deberse a que es el tipo de daño con el menor número de anotaciones y por lo tanto el modelo no generaliza bien en este tipo de daño. Puede ser interesante explorar técnicas de \textit{data augmentation} para generar más ejemplos de baches o añadir al entrenamiento un conjunto de datos especifico de baches.
+
+% Añadimos la imagen exp3-val0-all-confusion_matrix_normalized.png
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{img/exp3-val0-all-confusion_matrix_normalized.png}
+    \caption{Matriz de confusión normalizada del modelo entrenado en el experimento 3 sobre el \textit{fold\_0} de todos los datos de validación.}
+    \label{fig:exp3-val0-all-confusion_matrix_normalized}
+\end{figure}
