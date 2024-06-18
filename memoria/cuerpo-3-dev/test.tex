@@ -10,6 +10,8 @@ Cada fila puede contener varias cajas delimitadoras, una por cada objeto detecta
 
 Una vez se han generado las predicciones, se procede a enviarlas a la plataforma de evaluación de la CRDDC 2022. La competición tiene cinco tablas de clasificación diferentes, una general para los seis países, y otras cuatro para India, Japón, Noruega y Estados Unidos por separados. También hay una tabla de clasificación de resumen que muestras los resultados de cada participante en cada tabla de clasificación e incluye una columna de puntuación media entre todas las tablas de clasificación. La tabla \ref{tab:competition_scores} muestra el resumen de resultados de los mejores equipos. Una vez se han enviado las predicciones, la plataforma calcula el F1-score y ordena a los participantes en función de este valor. Se considera que el mejor equipo es aquel que obtiene la mayor puntuación media entre todas las tablas de clasificación.
 
+Una observación importante es que una táctica común en competiciones como esta es crear modelos específicos para cada tabla de clasificación. Estos modelos pueden estar sobreajustados a dicha tabla de clasificación, lo que les permite obtener una mayor puntuación y mejorar la puntuación media general. Otra táctica en competiciones es anotar manualmente las imágenes de prueba y usarlas para entrenar un modelo que esté sobreajustado a estas imágenes, logrando así mejores puntuaciones. Sin embargo, aunque esta estrategia puede mejorar la puntuación en la competición, no es una buena práctica para crear un modelo base que generalice bien y sea capaz de detectar daños en pavimentos en una amplia variedad de situaciones. Además, entrenar múltiples modelos para cada tabla de clasificación puede ser costoso en términos de tiempo y recursos.
+
 \begin{table}[H]
     \centering
     \resizebox{\textwidth}{!}{
@@ -28,8 +30,6 @@ Una vez se han generado las predicciones, se procede a enviarlas a la plataforma
     10 & T22\_014\_Poonam\_Kumari\_Saha       & 0.697423 & 0.493679 & 0.715857 & 0.461847 & 0.775131 & 0.628788 \\ \hline
     \end{tabular}
     }
-    \caption{Tabla de clasificación de resumen de la CRDDC 2022. Se muestran los 10 primeros equipos en el momento de cierre de la competición. \cite{Leaderboard_CRDDC2022}}
+    \caption{Tabla de clasificación de resumen de la CRDDC 2022. Se muestran los 10 primeros equipos en el momento de cierre de la competición. Extraído de \cite{Leaderboard_CRDDC2022}. Versión ampliada en anexo \ref{CAP:LEADERBOARD}.}
     \label{tab:competition_scores}
 \end{table}
-
-Una observación importante es que una táctica común en competiciones como esta es crear modelos específicos para cada tabla de clasificación. Estos modelos pueden estar sobreajustados a dicha tabla de clasificación, lo que les permite obtener una mayor puntuación y mejorar la puntuación media general. Otra táctica en competiciones es anotar manualmente las imágenes de prueba y usarlas para entrenar un modelo que esté sobreajustado a estas imágenes, logrando así mejores puntuaciones. Sin embargo, aunque esta estrategia puede mejorar la puntuación en la competición, no es una buena práctica para crear un modelo base que generalice bien y sea capaz de detectar daños en pavimentos en una amplia variedad de situaciones. Además, entrenar múltiples modelos para cada tabla de clasificación puede ser costoso en términos de tiempo y recursos.
