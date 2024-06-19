@@ -2609,7 +2609,15 @@
 	\def\pretexts
 	{
 		\ifx\@prefacefile\empty\else\chapter*{Prefacio}{\@prefacefile}\fi
-		\ifx\@ackfile\empty\else\chapter*{Agradecimientos}{\@ackfile}\fi
+		\ifx\@ackfile\empty\else
+			\clearpage
+			\phantomsection
+			\addcontentsline{toc}{chapter}{Agradecimientos}
+			\begingroup
+			\let\chapter\section % Treat the included content as if it's inside a section, not a chapter
+			\input{\@ackfile}
+			\endgroup
+		\fi
 		\ifx\@resumenfile\empty\else\chapter*{Resumen}{\@resumenfile}\vfill\mypalabrasclave\fi
 		\ifx\@abstractfile\empty\else\chapter*{Abstract}{\@abstractfile}\vfill\mykeywords\fi
 	}
