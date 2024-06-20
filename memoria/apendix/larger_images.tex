@@ -11,10 +11,12 @@ Este apéndice contiene imágenes de mayor tamaño que no caben en el cuerpo del
         \ref{fig:example_damage_types_large} & Ejemplos de los tipos de daños en el pavimento de la CRDDC2022. \\ \hline
         \ref{fig:datasetNinja_class_count_bar_large} & Número de anotaciones por clase en los datos de la CRDDC2022. \\ \hline
         \ref{fig:example_images_region_large} & Ejemplos de imágenes de los datos de la CRDDC2022. \\ \hline
+        \ref{fig:ground_truth_examples_large} &  Ejemplos de comparación entre el ground truth y las detecciones del modelo. \\ \hline
     \end{tabular}
     \caption{Imágenes adicionales mostradas en este apéndice.}
     \label{tab:larger_images}
 \end{table}
+\newpage
 
 % Añadimos img/example_damage_types_grid.png en tamaño grande ocupando toda la página en horizontal
 \begin{figure}
@@ -46,3 +48,19 @@ Este apéndice contiene imágenes de mayor tamaño que no caben en el cuerpo del
     \caption{Ejemplos de imágenes de los datos de la CRDDC2022.}
     \label{fig:example_images_region_large}
 \end{sidewaysfigure}
+
+% Añadimos img/ground_truth_example_1.png y img/ground_truth_example_4.png
+\begin{figure}
+    \centering
+    \subfigure[Ejemplo en el que al \textit{ground truth} le faltan anotaciones. A la derecha, se puede ver que el modelo ha detectado dos grietas longitudinales que no aparecen en el \textit{ground truth}.]{
+        \includegraphics[width=1\textwidth]{img/ground_truth_example_1.png}
+        \label{fig:ground_truth_example_1_large}
+    }
+    \vskip\baselineskip
+    \subfigure[Ejemplo en el que el modelo genera varias anotaciones más pequeñas en lugar de una sola grande, como en el \textit{ground truth}.]{
+        \includegraphics[width=1\textwidth]{img/ground_truth_example_4.png}
+        \label{fig:ground_truth_example_4_large}
+    }
+    \caption{Ejemplos de comparación entre el \textit{ground truth} y las detecciones del modelo.}
+    \label{fig:ground_truth_examples_large}
+\end{figure}
