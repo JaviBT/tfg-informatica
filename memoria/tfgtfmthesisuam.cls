@@ -3115,13 +3115,13 @@ coordinates {(#1,0) (#2,0)};
 
 \def\listoflists
 {
-	\if@listofalgsbool \listofalgorithms{\@auxvaralgorithmindex}  \fi
-	\if@listofcodesbool \mylistof{\@auxvarcodeindex}{lol}  \fi
-	\if@languagespa \if@listoftextboxesbool \listoftextboxes{\@auxvartextboxindex} \fi \fi
+	%\if@listofalgsbool \listofalgorithms{\@auxvaralgorithmindex}  \fi
+	%\if@listofcodesbool \mylistof{\@auxvarcodeindex}{lol}  \fi
+	%\if@languagespa \if@listoftextboxesbool \listoftextboxes{\@auxvartextboxindex} \fi \fi
 	\if@listofequationsbool \mylistof{\listequationname}{loe} \fi
 	\if@listoffiguresbool \mylistof{\listfigurename}{lof} \fi
-	\if@listoftablesbool \mylistof{\listtablename}{lot} \fi
-	\if@languagespa \else \if@listoftextboxesbool \listoftextboxes{\@auxvartextboxindex} \fi \fi
+	%\if@listoftablesbool \mylistof{\listtablename}{lot} \fi
+	%\if@languagespa \else \if@listoftextboxesbool \listoftextboxes{\@auxvartextboxindex} \fi \fi
 }
 
 \newcommand{\listoftextboxes}[1]
@@ -3152,22 +3152,22 @@ coordinates {(#1,0) (#2,0)};
 	\if@nonelistbool\empty\else
 		\if@alllistsbool
 			\@newschapter{\@ListsChapter}
-			\listofalgorithms{\@auxvaralgorithmindex}
-			\mylistof{\@auxvarcodeindex}{lol}
-			\if@languagespa \listoftextboxes{\@auxvartextboxindex} \fi
-	    \mylistof{\listequationname}{loe}
+			%\listofalgorithms{\@auxvaralgorithmindex}
+			%\mylistof{\@auxvarcodeindex}{lol}
+			%\if@languagespa \listoftextboxes{\@auxvartextboxindex} \fi
+	    	%\mylistof{\listequationname}{loe}
 			\mylistof{\listfigurename}{lof}
 			\mylistof{\listtablename}{lot}
-			\if@languagespa  \listoftextboxes{\@auxvartextboxindex} \fi
+			%\if@languagespa  \listoftextboxes{\@auxvartextboxindex} \fi
 		\else
 			\@newschapter{\@ListsChapter}
-			\if@algorithmsbool \listofalgorithms{\@auxvaralgorithmindex} \fi
-			\if@codesbool \mylistof{\@auxvarcodeindex}{lol} \fi
-			\if@languagespa \else \if@textboxesbool \listoftextboxes{\@auxvartextboxindex} \fi \fi
-			\if@equationsbool \mylistof{\listequationname}{loe} \fi
+			%\if@algorithmsbool \listofalgorithms{\@auxvaralgorithmindex} \fi
+			%\if@codesbool \mylistof{\@auxvarcodeindex}{lol} \fi
+			%\if@languagespa \else \if@textboxesbool \listoftextboxes{\@auxvartextboxindex} \fi \fi
+			%\if@equationsbool \mylistof{\listequationname}{loe} \fi
 			\if@figuresbool \mylistof{\listfigurename}{lof} \fi
 			\if@tablesbool \mylistof{\listtablename}{lot} \fi
-			\if@languagespa \else \if@textboxesbool  \listoftextboxes{\@auxvartextboxindex} \fi \fi
+			%\if@languagespa \else \if@textboxesbool  \listoftextboxes{\@auxvartextboxindex} \fi \fi
 		\fi
 	\fi
 }

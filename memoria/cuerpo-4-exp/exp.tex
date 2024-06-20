@@ -9,7 +9,7 @@ Este capítulo se centra en los experimentos realizados durante el desarrollo de
 
 El primer experimento relevante que se ha realizado en este TFG ha sido el entrenamiento de un modelo YOLOv8 con los datos de Estados Unidos de la CRDDC2022 y la validación cruzada de 4 \textit{folds}. En total se han realizado 4 iteraciones, una por cada \textit{fold}, y se han obtenido métricas de evaluación para cada iteración. El entrenamiento se ha llevado a cabo en Google Colab con una GPU Tesla T4 y ha durado aproximadamente 1 hora y 40 minutos por iteración. A continuación se detallan los pasos seguidos, los resultados obtenidos y las conclusiones extraídas.
 
-Se ha optado por entrenar solo con los datos de Estados Unidos porque como se puede ver en la tabla \ref{tab:dataset_info}, es una región con una cantidad moderada de imágenes pero con una gran cantidad de anotaciones. Por lo tanto, se considera que es una región adecuada para entrenar un primer modelo y probar la metodología de validación cruzada propuesta. Además, se ha utilizado un modelo YOLOv8 de tamaño \textit{small} y pre entrenado con el conjunto de datos, COCO ('yolov8s.pt'). Se ha utilizado un tamaño de batch de 50 durante 60 épocas para cada iteración. Estos hiperparámetros se han elegido para ajustarse a las limitaciones de memoria de la GPU Tesla T4 de Google Colab y para que el entrenamiento no dure demasiado tiempo.
+Se ha optado por entrenar solo con los datos de Estados Unidos porque, como se puede ver en la tabla \ref{tab:dataset_info}, es una región con una cantidad moderada de imágenes pero con una gran cantidad de anotaciones. Por lo tanto, se considera que es una región adecuada para entrenar un primer modelo y probar la metodología de validación cruzada propuesta. Además, se ha utilizado un modelo YOLOv8 de tamaño \textit{small} y pre entrenado con el conjunto de datos, COCO ('yolov8s.pt'). Se ha utilizado un tamaño de batch de 50 durante 60 épocas para cada iteración. Estos hiperparámetros se han elegido para ajustarse a las limitaciones de memoria de la GPU Tesla T4 de Google Colab y para que el entrenamiento no dure demasiado tiempo.
 
 El objetivo de este experimento es comprobar si la metodología de validación cruzada propuesta es adecuada para evaluar los modelos, ver cuanto podemos aproximarnos a los resultados de la CRDDC2022. Para este primer experimento se ha usado un tamaño de modelo \textit{small} y un subconjunto pequeño de datos para poder iterar rápidamente y extraer conclusiones que se puedan aplicar a futuros modelos más costosos en tiempo y recursos.
 
@@ -17,7 +17,7 @@ Una vez entrenado el modelo, hemos descargado los pesos y se ha realizado la val
 
 \begin{table}[H]
     \centering
-    \resizebox{0,6\textwidth}{!}{
+    \resizebox{0,45\textwidth}{!}{
         \begin{tabular}{|c|c|c|c|c|}
             \hline
             \textbf{Iteración} & \textbf{Precisión} & \textbf{Recall} & \textbf{F1-score} & \textbf{mAP50} \\ \hline
@@ -32,28 +32,30 @@ Una vez entrenado el modelo, hemos descargado los pesos y se ha realizado la val
     \label{tab:exp1_results}
 \end{table}
 
-Adicionalmente, se han realizado predicciones para las imágenes de test de Estados Unidos y se han subido a la plataforma de la CRDDC2022 para obtener un F1-score sobre los datos de test para los que no tenemos \textit{ground truth}. Las predicciones se han realizado con el notebook 'predict\_YOLO\_model.ipynb' y usando el modelo que usaba el \textit{fold\_0} como conjunto de validación. El F1-score obtenido ha sido, \textbf{0.515}, lo que indica que el modelo generaliza bien a datos que no ha visto durante el entrenamiento. En la tabla \ref{tab:top10_f1_scores} se pueden ver los 10 primeros equipos en la plataforma de la CRDDC2022 para los datos de test de Estados Unidos en el momento del cierre de la competición. Los F1-scores están entre 0.726 y 0.844, por lo que podemos concluir que el modelo tiene mucho margen de mejora pese a obtener resultados aceptables.
+Adicionalmente, se han realizado predicciones para las imágenes de test de Estados Unidos y se han subido a la plataforma de la CRDDC2022 para obtener un F1-score sobre los datos de test para los que no tenemos \textit{ground truth}. Las predicciones se realizaron utilizando el notebook 'predict\_YOLO\_model.ipynb' y el modelo que usaba el \textit{fold\_0} como conjunto de validación. El F1-score obtenido fue \textbf{0.515}, lo que indica que el modelo generaliza bien a datos no vistos durante el entrenamiento, aunque todavía presenta margen de mejora dada las limitaciones de este primer experimento.
+
+En la tabla \ref{tab:top10_f1_scores} se muestran los 10 primeros equipos en la plataforma de la CRDDC2022 para los datos de test de Estados Unidos al cierre de la competición. Los F1-scores de estos equipos están entre 0.726 y 0.844. La diferencia entre el modelo entrenado y los mejores modelos de la competición debe contextualizarse teniendo en cuenta las limitaciones de este experimento y el hecho de que los competidores utilizaron técnicas más avanzadas y significativamente más costosas en términos de tiempo y recursos, como \textit{ensembles} de modelos y \textit{data augmentation}.
 
 % Resultados para Estados Unidos en el momento del cierre de la competición
 \begin{table}[H]
     \centering
-    \resizebox{0,6\textwidth}{!}{
+    \resizebox{0.5\textwidth}{!}{
         \begin{tabular}{|c|l|r|}
         \hline
         \textbf{Rank} & \textbf{Team ID} & \textbf{F1-Score} \\ \hline
-        1  & T22\_043\_maybe\_he                  & 0.8443163877126995 \\ \hline
-        2  & T22\_030\_SH\_S\_U                   & 0.8170061339986036 \\ \hline
-        3  & T22\_032\_Dongjun\_Jeong             & 0.8008152493212433 \\ \hline
-        4  & T22\_035\_Shouxing\_Wang             & 0.7793253573066574 \\ \hline
-        5  & T22\_018\_Ammar\_Mohammed\_Almasrwhi & 0.7788579921283062 \\ \hline
-        6  & T22\_014\_Poonam\_Kumari\_Saha       & 0.7751306857212417 \\ \hline
-        7  & T22\_022\_Seon\_Ho\_Kim              & 0.7744267351552836 \\ \hline
-        8  & T22\_034\_han\_shi\_hao              & 0.743062760430727  \\ \hline
-        9  & T22\_024\_yi\_lia\_lia               & 0.7329269630149433 \\ \hline
-        10 & T22\_029\_hualin\_he                 & 0.7268546786507959 \\ \hline
+        1  & T22\_043\_maybe\_he                  & 0.8443 \\ \hline
+        2  & T22\_030\_SH\_S\_U                   & 0.8170 \\ \hline
+        3  & T22\_032\_Dongjun\_Jeong             & 0.8008 \\ \hline
+        4  & T22\_035\_Shouxing\_Wang             & 0.7793 \\ \hline
+        5  & T22\_018\_Ammar\_Mohammed\_Almasrwhi & 0.7789 \\ \hline
+        6  & T22\_014\_Poonam\_Kumari\_Saha       & 0.7751 \\ \hline
+        7  & T22\_022\_Seon\_Ho\_Kim              & 0.7744 \\ \hline
+        8  & T22\_034\_han\_shi\_hao              & 0.7431 \\ \hline
+        9  & T22\_024\_yi\_lia\_lia               & 0.7329 \\ \hline
+        10 & T22\_029\_hualin\_he                 & 0.7269 \\ \hline
         \end{tabular}
     }
-    \caption{F1-scores para los 10 primeros equipos en la plataforma de la CRDDC2022 para los datos de test de Estados Unidos en el momento del cierre de la competición.}
+    \caption{F1-scores para los 10 primeros equipos en la plataforma de la CRDDC2022 para los datos de test de Estados Unidos en el momento del cierre de la competición. \cite{Leaderboard_CRDDC2022}}
     \label{tab:top10_f1_scores}
 \end{table}
 
@@ -65,7 +67,7 @@ En las figuras \ref{fig:ground_truth_example_1} y \ref{fig:ground_truth_example_
 
 En la figura \ref{fig:exp1-cv1-confusion_matrix_normalized} se puede ver la matriz de confusión de la segunda iteración del experimento 1, que es similar a las de las otras iteraciones. En esta matriz de confusión se observa que el modelo detecta la mayoría de las grietas longitudinales, transversales y de piel de cocodrilo del \textit{ground truth}, pero tiene más problemas con los baches. Esto probablemente se deba a que el conjunto de datos de Estados Unidos tiene pocos ejemplos de baches. Es probable que, al entrenar con todos los datos, el modelo generalice mejor a los baches y aumente la precisión para este tipo de daño. Adicionalmente, en la figura \ref{fig:exp1-cv1-confusion_matrix_normalized} se pueden ver las predicciones de grietas que no aparecen en el \textit{ground truth} y que penalizan el F1-score del modelo. Como ya se ha mencionado, en muchos casos estas predicciones son correctas, pero no aparecen en el \textit{ground truth} o se han generado varias anotaciones pequeñas en lugar de una grande.
 
-En resumen, en este primer experimento, hemos comprobado la capacidad del modelo YOLOv8 para detectar daños en el pavimento utilizando un conjunto de datos específico de Estados Unidos y aplicando una validación cruzada de 4 \textit{folds}. Los resultados obtenidos muestran que el modelo logra un rendimiento aceptable, con un F1-score medio de 0.670 y un mAP@0.5 de 0.710 en las iteraciones de validación. Sin embargo, al evaluar el modelo en los datos de test de la plataforma CRDDC2022, se obtuvo un F1-score de \textbf{0.515}, lo que indica que el modelo aún tiene margen de mejora para alcanzar los niveles de rendimiento de los mejores equipos de la competición, cuyos F1-scores varían entre 0.726 y 0.844. El experimento también ha servido para identificar limitaciones en el \textit{ground truth}.
+En resumen, en este primer experimento, hemos comprobado la capacidad del modelo YOLOv8 para detectar daños en el pavimento utilizando un subconjunto de datos pequeño de la CRDDC2022. Los resultados obtenidos muestran que el modelo generaliza bien a datos no vistos durante el entrenamiento, aunque todavía presenta margen de mejora. Los próximos experimentos se centrarán en realizar entrenamientos más computacionalmente costosos con más datos y mayores tamaños de modelo, con el objetivo de obtener un modelo base más preciso y robusto para la detección de daños en el pavimento.
 
 % Añadimos img/ground_truth_example_1.png y img/ground_truth_example_4.png
 \begin{figure}[H]
@@ -93,53 +95,54 @@ En resumen, en este primer experimento, hemos comprobado la capacidad del modelo
 
 \section{Experimento 2: YOLOv8 \textit{very large} con todos los datos de Estados Unidos}\label{SEC:EXP2}
 
-Una de las principales conclusiones extraídas del experimento 1 es que probablemente se puede mejorar el rendimiento del modelo si se entrena con todos los datos anotados de Estados Unidos y se utiliza un modelo YOLOv8 de mayor tamaño. Por lo tanto, en este experimento se ha entrenado un modelo YOLOv8 de tamaño \textit{very large} con todos los datos anotados de Estados Unidos. El objetivo de este experimento es comprobar si se puede mejorar el rendimiento del modelo y si se puede obtener un F1-score más alto en la plataforma de la CRDDC2022. Como vamos a usar todos los datos anotados para entrenar, no nos podemos fiar de ninguna validación, ya que inevitablemente se usaran imágenes vistas en entrenamiento para validar. Por lo tanto, no se ha realizado validación cruzada en este experimento.
+Una forma de mejorar el rendimiento del modelo es aumentar la cantidad de datos de entrenamiento, y otra es incrementar el tamaño del modelo. En este experimento, se busca evaluar cuánto se puede mejorar el rendimiento del modelo entrenado en el experimento 1 al utilizar un modelo YOLOv8 de tamaño \textit{very large} en lugar de \textit{small}, y entrenando con el 100\% de los datos anotados de Estados Unidos en lugar de solo el 75\%. Como se utilizarán todos los datos anotados para entrenar, no se puede confiar en ninguna validación, ya que inevitablemente se utilizarán imágenes vistas durante el entrenamiento para validar. Por lo tanto, en este experimento no se ha realizado validación cruzada.
 
 Se ha utilizado un modelo YOLOv8 de tamaño \textit{very large} y pre entrenado con el conjunto de datos COCO ('yolov8x.pt'). Además, se ha utilizado un tamaño de batch de 15 durante 60 épocas. Estos hiperparámetros se han elegido para ajustarse a las limitaciones de memoria de la GPU Tesla T4 de Google Colab y para que el entrenamiento no dure demasiado tiempo. El entrenamiento ha durado 7 horas. En el anexo \ref{CAP:RES_EXP} se pueden ver el resumen de este entrenamiento generado por Ultralytics.
 
-Una vez entrenado el modelo, se han realizado predicciones para las imágenes de test de Estados Unidos y se han subido a la plataforma de la CRDDC2022 para obtener un F1-score sobre los datos de test para los que no tenemos \textit{ground truth}. El F1-score obtenido ha sido, \textbf{0.607}, lo cual supone una mejora de casi \textbf{18\%} respecto al experimento 1.
+Una vez entrenado el modelo, se han realizado predicciones para las imágenes de prueba de Estados Unidos y se han subido a la plataforma de la CRDDC2022 para obtener un F1-score sobre los datos de prueba para los que no tenemos \textit{ground truth}. El F1-score obtenido ha sido \textbf{0.607}, lo cual supone una mejora de casi \textbf{18\%} respecto al experimento 1. Debido al aumento del tamaño del modelo, esta mejora en el F1-score tiene asociado un aumento en el tiempo de inferencia. En particular, la inferencia de las 1200 imágenes de prueba de Estados Unidos en un chip Apple M1 Pro ha tardado 2 minutos y 14 segundos para el modelo \textit{small} y 8 minutos y 45 segundos para el modelo \textit{very large}, lo que equivale a \textbf{8.96} imágenes por segundo para el modelo \textit{small} y \textbf{2.29} imágenes por segundo para el modelo \textit{very large}. Esta diferencia en el tiempo de inferencia puede ser un factor crucial a la hora de desplegar el modelo, especialmente si se quiere realizar la inferencia en tiempo real.
 
-Adicionalmente a este experimento, se ha realizado un entrenamiento de un YOLOv8 \textit{very large} con el \textit{fold\_0} como conjunto de validación y el resto como entrenamiento. Se han utilizado 150 épocas y un tamaño de batch de 15. El objetivo de este entrenamiento ha sido ver cuantas épocas son necesarias para que el modelo \textit{very large} converja y si se puede mejorar el F1-score obtenido en el experimento 2. En las gráficas de 'val\/box\_loss' y 'val\/dfs\_loss' de la figura \ref{fig:exp2b-results} se pueden ver que para este entrenamiento con un 75\% de los datos anotados de Estados Unidos, el modelo converge en aproximadamente 90 épocas y a partir de ahí comienza a sobreajustar. De esto se puede concluir que el experimento 2 con un 100\% de los datos anotados de Estados Unidos y 60 épocas quizás podría haberse beneficiado de más épocas de entrenamiento.
+Se intentó mejorar el modelo extendiendo el entrenamiento de 60 a 120 épocas. Sin embargo, el F1-score obtenido en la plataforma fue de \textbf{0.604}, casi el mismo que en el experimento 2. Esto sugiere que el modelo ya convergía en 60 épocas o que pierde F1-score debido al sobreajuste con 120 épocas. Dado que se utilizaron todos los datos de entrenamiento, no se puede determinar si el modelo se sobreajustó basándose en los resultados de validación.
 
-Se ha intentado aplicar esta conclusión para mejorar el F1-score del experimento 2 extendiendo el entrenamiento con el 100\% de los datos de entrenamiento de 60 a 120 épocas. Sin embargo, el F1-score obtenido en la plataforma ha sido de \textbf{0.604}, casi el mismo que en el experimento 2. Esto indica que el modelo o bien ya convergía en 60 épocas o bien pierde F1-score por sobreajuste con 120 épocas. Como se han usado todos los datos de entrenamiento, no se puede saber si el modelo se ha sobreajustado mirando los resultados de validación.
+Adicionalmente, se realizó un entrenamiento con un YOLOv8 \textit{very large}, utilizando el \textit{fold\_0} como conjunto de validación y el 75\% restante como conjunto de entrenamiento. Este entrenamiento se llevó a cabo durante 150 épocas con un tamaño de batch de 15. El objetivo era determinar cuántas épocas son necesarias para que el modelo \textit{very large} converja y si es posible mejorar el F1-score obtenido en el experimento 2. En las gráficas de 'val/box\_loss' y 'val/dfs\_loss' de la figura \ref{fig:exp2b-results} se observa que, para este entrenamiento con un 75\% de los datos anotados de Estados Unidos, el modelo converge en aproximadamente 90 épocas, después de lo cual comienza a sobreajustar. Como al entrenar con el 100\% de los datos se procesa más información por época, podemos suponer que el modelo converge antes y, por lo tanto, entre 60 y 90 épocas es un rango razonable para entrenar el modelo con el 100\% de los datos.
 
 % Añadir la imagen exp2b-results.png
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{img/exp2b-results.png}
     \caption{Resultados del entrenamiento del modelo YOLOv8 \textit{very large} con el \textit{fold\_0} como conjunto de validación.}
     \label{fig:exp2b-results}
 \end{figure}
 
-En resumen, incrementar el tamaño del modelo de \textit{small} a \textit{very large} y entrenar con todos los datos anotados de Estados Unidos ha mejorado el F1-score del modelo de \textbf{0.515} a \textbf{0.607}, lo que supone una mejora de casi un \textbf{18\%}. A partir de este punto, la forma de seguir mejorando el modelo será entrenando con más datos, ya sea de otras regiones o utilizando \textit{data augmentation} para generar más ejemplos de entrenamiento.
+En resumen, incrementar el tamaño del modelo de \textit{small} a \textit{very large} y entrenar con todos los datos anotados de Estados Unidos ha mejorado el F1-score del modelo de \textbf{0.515} a \textbf{0.607}, lo que supone una mejora de casi un \textbf{18\%}. Aunque también aumenta el tiempo de inferencia, lo que puede ser un factor crucial a la hora de desplegar el modelo. A partir de este punto, la forma de seguir mejorando el modelo será entrenando con más datos, ya sea de otras regiones o utilizando \textit{data augmentation} para generar más ejemplos de entrenamiento.
+
 
 \section{Experimento 3: Entrenamiento de modelo base con todos los datos de la CRDDC2022}\label{SEC:EXP3}
-
 En este experimento, se ha entrenado un modelo YOLOv8 de tamaño \textit{very large} con todos los conjuntos de datos de la CRDDC2022. Se ha realizado una validación simple utilizando el 75\% de los datos para entrenamiento y el 25\% para validación (\textit{fold\_0}), sin utilizar validación cruzada debido a la alta demanda computacional de este experimento.
 
-Debido al tamaño del modelo \textit{very large}, el mayor tamaño de batch soportado por las Tesla T4 de Google Colab era 16. Con 28784 imágenes de entrenamiento y 9601 de validación, el tamaño de batch de 16 resultaba en 1799 iteraciones de entrenamiento y 601 de validación por época. Ejecutando este proceso en Google Colab con una Tesla T4, cada época duraba aproximadamente 43 minutos. El entrenamiento se ha realizado durante 90 épocas, lo que ha supuesto aproximadamente 65 horas de entrenamiento. Por lo tanto, no era razonable realizar una validación cruzada simplemente para garantizar una ligera mejora en la generalización del modelo.
+Debido al tamaño del modelo \textit{very large}, el tamaño máximo de batch soportado por las Tesla T4 de Google Colab era de 16. Con 28,784 imágenes de entrenamiento y 9,601 de validación, el batch de 16 resultó en 1,799 iteraciones de entrenamiento y 601 de validación por época. Ejecutando este proceso en Google Colab con una Tesla T4, cada época duraba aproximadamente 43 minutos. El entrenamiento se realizó durante 90 épocas, lo que sumó aproximadamente 65 horas de entrenamiento. Por lo tanto, no era viable realizar una validación cruzada, ya que habría requerido aproximadamente 195 horas adicionales y solo habría garantizado una pequeña mejora en términos de generalización y reducción del riesgo de sobreajuste.
 
 Los pesos de los modelos entrenados en Google Colabs se han descargado y se ha realizado la inferencia en local sobre los distintos conjuntos de datos que componen la CRDDC2022. Los resultados obtenidos en la plataforma de la CRDDC2022 se pueden ver en la tabla \ref{tab:exp3_results}.
-
 \begin{table}[H]
     \centering
-    \resizebox{0,45\textwidth}{!}{
+    \resizebox{0.35\textwidth}{!}{
         \begin{tabular}{|l|r|}
         \hline
         \textbf{\textit{Leaderboard}} & \textbf{F1-Score} \\ \hline
-        Todos           & 0.596914344950027     \\ \hline
-        India           & 0.37469955667942845   \\ \hline
-        Japón           & 0.5946284828735682    \\ \hline
-        Noruega         & 0.3097122625784419    \\ \hline
-        Estados Unidos  & 0.6412266602062118    \\ \hline
-        \textbf{Media}  & 0.503436              \\ \hline
+        Todos           & 0.5969 \\ \hline
+        India           & 0.3747 \\ \hline
+        Japón           & 0.5946 \\ \hline
+        Noruega         & 0.3097 \\ \hline
+        Estados Unidos  & 0.6412 \\ \hline
+        \textbf{Media}  & 0.5034 \\ \hline
         \end{tabular}
     }
     \caption{F1-scores obtenidos en la plataforma de la CRDDC2022 para los distintos conjuntos de datos.}
     \label{tab:exp3_results}
 \end{table}
 
-En el anexo \ref{CAP:LEADERBOARD} se presentan los resultados de los 15 mejores equipos para cada \textit{leaderboard} de la CRDDC2022 al cierre de la competición. Al comparar los resultados de este experimento con los de los mejores equipos de la CRDDC2022, se observa que el modelo entrenado se encuentra ligeramente por debajo del top 15 y lejos de los primeros puestos. Por ejemplo, en el \textit{leaderboard} de todos los datos, el modelo entrenado obtiene un F1-score de \textbf{0.597}, mientras que los 15 mejores equipos obtuvieron entre 0.605 y 0.770. Es decir, aunque el modelo entrenado casi entra en el top 15, queda muy lejos del primer puesto. Por otro lado, la inferencia se ha realizado en un chip Apple M1 Pro y ha tardado 77 minutos y 2 segundos para las 9035 imágenes de test, lo que corresponde a \textbf{1.95} imágenes por segundo. Este tiempo de inferencia es muy alto y limitaría la capacidad de despliegue de este modelo en un entorno de producción. Este problema no es común en las soluciones propuestas por los equipos de la CRDDC2022, por lo que una posible línea de trabajo futuro sería optimizar el modelo para reducir el tiempo de inferencia, de hecho, la nueva edición de la RDDC, la ORDDC2024 \cite{ORDDC2024}, tiene como principal objetivo la optimización de los modelos para reducir el tiempo de inferencia (ver sección \ref{SEC:TRABFUT}).
+En el anexo \ref{CAP:LEADERBOARD} se presentan los resultados de los 15 mejores equipos para cada \textit{leaderboard} de la CRDDC2022 al cierre de la competición. Al comparar los resultados de este experimento con los de los mejores equipos de la CRDDC2022, se observa que el modelo entrenado se encuentra ligeramente por debajo del top 15 y lejos de los primeros puestos. Por ejemplo, en el \textit{leaderboard} de todos los datos, el modelo entrenado obtiene un F1-score de \textbf{0.597}, mientras que los 15 mejores equipos obtuvieron entre 0.605 y 0.770. Es decir, aunque el modelo entrenado casi entra en el top 15, queda muy lejos del primer puesto. Por otro lado, la inferencia se ha realizado en un chip Apple M1 Pro y ha tardado 77 minutos y 2 segundos para las 9035 imágenes de test, lo que corresponde a \textbf{1.95} imágenes por segundo. 
+
+El tiempo de inferencia es muy alto y limitaría la capacidad de despliegue de este modelo en un entorno de producción que requiera inferencia en tiempo real. Algunas soluciones en términos de despliegue serian utilizar un tamaño de modelo más pequeño, procesar las imágenes en \textit{off-line} desde un servidor central o limitar la velocidad de los vehículos que recogen las imágenes para reducir el requisito de imágenes por segundo. En cualquier caso, este problema es común en las soluciones propuestas por los equipos de la CRDDC2022, por lo que una posible línea de trabajo futuro sería optimizar el modelo para reducir el tiempo de inferencia, de hecho, la nueva edición de la RDDC, la ORDDC2024 \cite{ORDDC2024}, tiene como principal objetivo la optimización de los modelos para reducir el tiempo de inferencia y uso de recursos (ver sección \ref{SEC:TRABFUT}).
 
 Es importante recordar que en este trabajo se ha utilizado YOLOv8 en lugar de YOLOv7 y YOLOv5, que eran las versiones disponibles durante la CRDDC2022, ya que YOLOv8 aún no existía en ese momento. Sin embargo, la mayoría de los equipos participantes emplearon \textit{ensembles} de varios modelos y otras técnicas avanzadas que les permitieron obtener mejores puntuaciones, incluso utilizando una versión anterior de YOLO. Esto sugiere que nuestro sistema base tiene un amplio margen de mejora si se aplican técnicas similares, especialmente \textit{ensembles} de modelos. El objetivo de este TFG era desarrollar un sistema base basado en YOLOv8, al que posteriormente se le puedan aplicar algunas de estas técnicas. En la sección \ref{SEC:TRABFUT} se proponen algunas líneas de trabajo futuro para mejorar el rendimiento del modelo.
 
@@ -153,7 +156,7 @@ En los \textit{leaderboards} de India y Noruega se han obtenido resultados signi
 
 En el caso de India, la calidad de las imágenes es la más baja de todos los conjuntos de datos (ver figura \ref{fig:example_images_region}), y la distribución de los tipos de daño es muy diferente, con una proporción significativamente alta de grietas de cocodrilo y baches (ver tabla \ref{tab:anotaciones_por_clase_region}). El hecho de que el entrenamiento se realice con una distribución de clases diferente a la de validación puede ser una de las causas de los malos resultados en India.
 
-En el caso de Noruega, las imágenes tienen una resolución muy alta y el pavimento suele ocupar un porcentaje pequeño de la imagen (ver figura \ref{fig:example_images_region}). Estos dos factores hacen que, al redimensionar las imágenes durante el entrenamiento, el número de píxeles dedicados al pavimento sea muy pequeño, impidiendo así la detección de daños pequeños. Al observar las matrices de confusión de Noruega (ver figuras \ref{fig:exp3_val0_norway_confusion_matrix_normalized} y \ref{fig:exp3_val0_norway_confusion_matrix}), se puede ver que el modelo no consigue detectar la mayoría de los daños, lo que indica que el problema no radica en la existencia de muchos falsos positivos, sino en la incapacidad del modelo para detectar daños reales debido al pequeño tamaño de los píxeles dedicados al pavimento. En la figura \ref{fig:CRDDC2022_detailed_solutions}, se observa que una de las características de la solución del tercer equipo, MDPT, fue recortar las imágenes de Noruega para centrarse en el pavimento. Esta es una estrategia que podría probarse. 
+En el caso de Noruega, las imágenes tienen una resolución muy alta y el pavimento suele ocupar un porcentaje pequeño de la imagen (ver figura \ref{fig:example_images_region}). Estos dos factores hacen que, al redimensionar las imágenes durante el entrenamiento, el número de píxeles dedicados al pavimento sea muy pequeño, impidiendo así la detección de daños pequeños. Al observar las matrices de confusión de Noruega (ver figuras \ref{fig:exp3_val0_norway_confusion_matrix_normalized} y \ref{fig:exp3_val0_norway_confusion_matrix}), se puede ver que el modelo no consigue detectar la mayoría de los daños, lo que indica que el problema no radica en la existencia de muchos falsos positivos, sino en la incapacidad del modelo para detectar daños reales debido al pequeño tamaño de los píxeles dedicados al pavimento. En la figura \ref{fig:CRDDC2022_detailed_solutions}, se observa que una de las características de la solución del tercer equipo, MDPT, fue recortar las imágenes de Noruega para centrarse en el pavimento. Esta es una estrategia que podría probarse. No obstante, esta solución limita la generalización, ya que se trata de una actuación \textit{ad-hoc} focalizada en mejorar el rendimiento en un conjunto de datos específico. La alternativa para generalizar sería crear un algoritmo que detecte pavimentos y recorte las imágenes automáticamente, lo cual es una tarea más compleja que la propuesta por MDPT.
 
 Las particularidades de estos dos conjuntos de datos podrían capturarse mediante un \textit{ensemble} de modelos que incluyan modelos específicamente entrenados para tener en cuenta estas características específicas de las imágenes de India y Noruega.
 
@@ -161,7 +164,7 @@ En la figura \ref{fig:exp3-val0-all-confusion_matrix_normalized} se puede ver la
 
 En las figuras \ref{fig:exp3-val-all-curves} se pueden ver las curvas de F1-score en función del umbral y precisión vs \textit{recall} para el modelo entrenado en el experimento 3 sobre el \textit{fold\_0} de todos los datos de validación. Se observa que el umbral óptimo para el modelo es aproximadamente 0.3, lo cual es parecido al umbral por defecto de 0.25 que hemos usado con Ultralytics. Adicionalmente, en ambas gráficas vemos que los peores resultados vienen de los baches, mientras que los mejores vienen de las grietas de cocodrilo. Esto es consistente con lo que hemos visto previamente y refuerza la necesidad de buscar soluciones específicas para los baches.
 
-En resumen, el tercer experimento consistió en entrenar un modelo YOLOv8 de tamaño \textit{very large} utilizando todos los conjuntos de datos de la CRDDC2022 y realizar una validación simple con el 25\% de los datos, obteniendo un F1-score global de \textbf{0.597}. Esta puntuación muestra que el modelo es capaz de generalizar en una variedad de conjuntos de datos y puede resultar útil como base para futuros trabajos de detección de daños en pavimentos. También se ha observado que el rendimiento en distintos conjuntos de datos ha sido variado, con mejores resultados en Estados Unidos y peores en India y Noruega, lo cual nos ha permitido identificar posibles causas y soluciones para mejorar en futuros experimentos. Comparado con los mejores equipos de la CRDDC2022, el modelo entrenado queda ligeramente por debajo del top 15, lo que resalta la necesidad de utilizar técnicas avanzadas, como \textit{ensembles} de modelos, para mejorar el rendimiento.
+En resumen, el tercer experimento consistió en entrenar un modelo YOLOv8 de tamaño \textit{very large} utilizando todos los conjuntos de datos de la CRDDC2022. Se ha obtenido un F1-score global de \textbf{0.597}, lo que indica que el modelo es capaz de generalizar en una variedad de conjuntos de datos y puede resultar útil como base para futuros trabajos de detección de daños en pavimentos. Además, se han identificado las limitaciones del modelo y posibles áreas de mejora. En la sección \ref{SEC:TRABFUT} se proponen algunas líneas de trabajo futuro para expandir el modelo base y mejorar su rendimiento.
 
 % Añadimos la imagen exp3-val0-all-confusion_matrix_normalized.png
 \begin{figure}[H]
