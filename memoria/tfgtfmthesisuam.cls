@@ -2365,7 +2365,7 @@
 			\else
 				\pdfmetavalues{\@author}{\@titleaux}{Tesis}{\@auxkeywords,\@auxpalabrasclave}
 			\fi 
-		\fi 
+		\fi
 	\else
 		\if@tfgwork
 			\pdfmetavalues{\@author}{\@titleaux}{Bachelor thesis}{\@auxkeywords,\@auxpalabrasclave}
@@ -3547,7 +3547,7 @@ coordinates {(#1,0) (#2,0)};
 \AtBeginDocument
 {
 	\setnames
-	\if@coversbool \coverpage \fi
+	%\if@coversbool \coverpage \fi
 	\titlepage
 
 	\renewcommand{\thepage}{\roman{page}}
@@ -3595,5 +3595,5 @@ coordinates {(#1,0) (#2,0)};
 	\cleardoublepage
 	\pagestyle{indexst}
 	\printindex
-	\if@coversbool \endcoverpage \fi
+	%\if@coversbool \endcoverpage \fi
 }
